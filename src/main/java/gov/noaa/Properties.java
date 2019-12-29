@@ -19,7 +19,7 @@ public class Properties {
     private String event;
     private LocalDateTime expires;
     private Geocode geocode;
-    private Object headline;
+    private String headline;
     private String id;
     private String instruction;
     private String messageType;

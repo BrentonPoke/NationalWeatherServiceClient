@@ -8,7 +8,7 @@ import lombok.Data;
 @SuppressWarnings("unused")
 public class Parameters {
 
-    private List<String> bLOCKCHANNEL;
-    private List<String> pIL;
+    private List<String> BLOCKCHANNEL;
+    private List<String> PIL;
 
 }
