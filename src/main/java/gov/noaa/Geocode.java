@@ -8,7 +8,7 @@ import lombok.Data;
 @SuppressWarnings("unused")
 public class Geocode {
 
-    private List<String> sAME;
-    private List<String> uGC;
+    private List<String> SAME;
+    private List<String> UGC;
 
 }
