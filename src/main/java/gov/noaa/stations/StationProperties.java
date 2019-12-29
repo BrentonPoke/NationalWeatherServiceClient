@@ -1,5 +1,6 @@
 package gov.noaa.stations;
 
+import java.util.TimeZone;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,6 @@ public class StationProperties {
 	private String stationIdentifier;
 	private String type;
 	private String name;
-	private String timeZone;
+	private TimeZone timeZone;
 	private String id;
 }
