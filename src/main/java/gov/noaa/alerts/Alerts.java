@@ -1,6 +1,7 @@
 
-package gov.noaa;
+package gov.noaa.alerts;
 
+import gov.noaa.Feature;
 import java.util.List;
 import lombok.Data;
 

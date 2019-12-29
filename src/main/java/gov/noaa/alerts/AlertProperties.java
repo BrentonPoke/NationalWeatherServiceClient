@@ -1,13 +1,16 @@
 
-package gov.noaa;
+package gov.noaa.alerts;
 
+import gov.noaa.Geocode;
+import gov.noaa.Parameters;
+import gov.noaa.Reference;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
 @Data
 @SuppressWarnings("unused")
-public class Properties {
+public class AlertProperties {
 
     private List<String> affectedZones;
     private String areaDesc;
