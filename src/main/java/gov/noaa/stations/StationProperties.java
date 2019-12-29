@@ -13,4 +13,7 @@ public class StationProperties {
 	private String name;
 	private TimeZone timeZone;
 	private String id;
+	private String forecast;
+	private String county;
+	private String fireWeatherZone;
 }
