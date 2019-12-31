@@ -4,9 +4,7 @@ package gov.noaa;
 import java.io.IOException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 @EqualsAndHashCode(callSuper = true)
