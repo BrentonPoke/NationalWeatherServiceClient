@@ -1,6 +1,7 @@
 
 package gov.noaa.alerts;
 
+import com.google.gson.annotations.SerializedName;
 import gov.noaa.Parameters;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,5 +18,8 @@ public class AlertParameters extends Parameters {
     private List<LocalDateTime> eventEndingTime;
     private List<String> NWSheadline;
     private List<String> VTEC;
+    private List<String> HazardType;
+    @SerializedName(value = "EASORG",alternate = "EAS-ORG")
+    private List<String> EASORG;
 
 }
