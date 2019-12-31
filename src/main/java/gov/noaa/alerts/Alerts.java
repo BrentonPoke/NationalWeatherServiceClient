@@ -1,7 +1,6 @@
 
 package gov.noaa.alerts;
 
-import gov.noaa.Feature;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.Data;
 public class Alerts {
 
     private List<String> context;
-    private List<Feature> features;
+    private List<AlertFeature> features;
     private String title;
     private String type;
     private LocalDateTime updated;
