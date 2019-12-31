@@ -1,6 +1,7 @@
 package gov.noaa.stations.observations;
 
 import gov.noaa.stations.Elevation;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,9 @@ public class Properties{
 	private String station;
 	private Temperature temperature;
 	private String id;
-	private String timestamp;
+	private LocalDateTime timestamp;
 	private Elevation elevation;
 	private List<CloudLayer> cloudLayers;
 	private String textDescription;
-	private List<PresentWeatherItem> presentWeather;
+	private List<PresentWeather> presentWeather;
 }

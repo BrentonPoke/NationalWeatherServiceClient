@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class PresentWeatherItem{
+public class PresentWeather{
 	private String intensity;
 	private String rawString;
-	private Object modifier;
+	private String modifier;
 	private String weather;
 }
