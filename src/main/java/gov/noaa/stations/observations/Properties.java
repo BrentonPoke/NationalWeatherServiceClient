@@ -19,5 +19,5 @@ public class Properties{
 	private Elevation elevation;
 	private List<CloudLayer> cloudLayers;
 	private String textDescription;
-	private List<PresentWeather> presentWeather;
+	private List<PresentWeather> present;
 }
