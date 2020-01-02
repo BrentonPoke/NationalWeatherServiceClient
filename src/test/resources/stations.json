@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "https://api.weather.gov/stations/KPHX",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.003465,
+          33.427799
+        ]
+      },
+      "properties": {
+        "@id": "https://api.weather.gov/stations/KPHX",
+        "@type": "wx:ObservationStation",
+        "elevation": {
+          "value": 339.85200000000003,
+          "unitCode": "unit:m"
+        },
+        "stationIdentifier": "KPHX",
+        "name": "Phoenix, Phoenix Sky Harbor International Airport",
+        "timeZone": "America/Phoenix"
+      }
+    },
+    {
+      "id": "https://api.weather.gov/stations/KDVT",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.06618,
+          33.69026
+        ]
+      },
+      "properties": {
+        "@id": "https://api.weather.gov/stations/KDVT",
+        "@type": "wx:ObservationStation",
+        "elevation": {
+          "value": 452.93280000000004,
+          "unitCode": "unit:m"
+        },
+        "stationIdentifier": "KDVT",
+        "name": "Phoenix, Phoenix-Deer Valley Municipal Airport",
+        "timeZone": "America/Phoenix"
+      }
+    }
+  ],
+  "observationStations": [
+    "https://api.weather.gov/stations/KPHX",
+    "https://api.weather.gov/stations/KDVT"
+  ]
+}

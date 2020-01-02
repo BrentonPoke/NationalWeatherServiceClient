@@ -3,10 +3,67 @@
  */
 package NationalWeatherServiceClient;
 
+import static org.junit.Assert.assertEquals;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import gov.noaa.WeatherServiceGenerator;
+import gov.noaa.stations.StationService;
+import gov.noaa.stations.Stations;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Scanner;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import lombok.SneakyThrows;
 import org.junit.Test;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LibraryTest {
-    @Test public void testSomeLibraryMethod() {
+     static class StringGsonTypeAdapter implements JsonDeserializer<TimeZone> {
+
+        private static StringGsonTypeAdapter INSTANCE = new StringGsonTypeAdapter();
+
+        public static StringGsonTypeAdapter instance() {
+            return INSTANCE;
+        }
+
+        @Override
+        public TimeZone deserialize(JsonElement jsonElement, Type type,
+            JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            return TimeZone.getTimeZone("America/Phoenix");
+        }
+    }
+    @SneakyThrows
+    @Test public void stationsTest() {
+      FileInputStream input = new FileInputStream("src/test/resources/stations.json");
+      Scanner scanner = new Scanner(input);
+      StringBuilder json = new StringBuilder();
+      while(scanner.hasNext())
+        json.append(scanner.nextLine());
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+            Stations stations = gsonBuilder.create().fromJson(json.toString(),Stations.class);
+        StationService service = WeatherServiceGenerator.createService(StationService.class);
+        Call<Stations> callSync = service.getStations(ImmutableMap.of("state","AZ","limit","2"));
+        try{
+            Response<Stations> response = callSync.execute();
+            Stations stations1 = response.body();
+            assertEquals(stations,stations1);
+        }catch (IOException e){
+            Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+        }
+
 
     }
 }
