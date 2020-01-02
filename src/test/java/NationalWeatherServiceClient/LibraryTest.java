@@ -12,6 +12,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import gov.noaa.WeatherServiceGenerator;
+import gov.noaa.glossary.GlossaryItem;
+import gov.noaa.glossary.GlossaryService;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
 import java.io.BufferedReader;
@@ -65,5 +67,26 @@ public class LibraryTest {
         }
 
 
+    }
+
+    @SneakyThrows
+    @Test public void glossaryTest(){
+      FileInputStream input = new FileInputStream("src/test/resources/glossary.json");
+      Scanner scanner = new Scanner(input);
+      StringBuilder json = new StringBuilder();
+      while(scanner.hasNext())
+        json.append(scanner.nextLine());
+
+      GsonBuilder gsonBuilder = new GsonBuilder();
+      GlossaryItem stations = gsonBuilder.create().fromJson(json.toString(),GlossaryItem.class);
+      GlossaryService service = WeatherServiceGenerator.createService(GlossaryService.class);
+      Call<GlossaryItem> callSync = service.getGlossaryItems();
+      try{
+        Response<GlossaryItem> response = callSync.execute();
+        GlossaryItem stations1 = response.body();
+        assertEquals(stations,stations1);
+      }catch (IOException e){
+        Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+      }
     }
 }
