@@ -1,5 +1,7 @@
 language: java
-dist: precise
+dist: bionic
 jdk:
+  - openjdk9
   - openjdk8
   - oraclejdk8
+  - oraclejdk9
