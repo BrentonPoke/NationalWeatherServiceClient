@@ -5,5 +5,5 @@ import retrofit2.http.GET;
 
 public interface GlossaryService {
   @GET("/glossary")
-  public Call<GlossaryItem> getGlossaryItems();
+  public Call<Glossary> getGlossaryItems();
 }

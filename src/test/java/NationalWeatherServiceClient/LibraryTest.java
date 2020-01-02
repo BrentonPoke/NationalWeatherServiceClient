@@ -12,20 +12,17 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import gov.noaa.WeatherServiceGenerator;
-import gov.noaa.glossary.GlossaryItem;
+import gov.noaa.glossary.Glossary;
 import gov.noaa.glossary.GlossaryService;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import org.junit.Test;
 import retrofit2.Call;
@@ -78,13 +75,13 @@ public class LibraryTest {
         json.append(scanner.nextLine());
 
       GsonBuilder gsonBuilder = new GsonBuilder();
-      GlossaryItem stations = gsonBuilder.create().fromJson(json.toString(),GlossaryItem.class);
+      Glossary glossary = gsonBuilder.create().fromJson(json.toString(),Glossary.class);
       GlossaryService service = WeatherServiceGenerator.createService(GlossaryService.class);
-      Call<GlossaryItem> callSync = service.getGlossaryItems();
+      Call<Glossary> callSync = service.getGlossaryItems();
       try{
-        Response<GlossaryItem> response = callSync.execute();
-        GlossaryItem stations1 = response.body();
-        assertEquals(stations,stations1);
+        Response<Glossary> response = callSync.execute();
+        Glossary glossary1 = response.body();
+        assertEquals(glossary,glossary1);
       }catch (IOException e){
         Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
       }

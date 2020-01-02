@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @SuppressWarnings("unused")
-public class GlossaryItem {
+public class Glossary {
 
     private String definition;
     private String term;
