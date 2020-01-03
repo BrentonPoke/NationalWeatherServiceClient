@@ -1,11 +1,12 @@
 
 package gov.noaa.alerts;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @SuppressWarnings("unused")
 public class Alerts {
 
@@ -13,6 +14,6 @@ public class Alerts {
     private List<AlertFeature> features;
     private String title;
     private String type;
-    private LocalDateTime updated;
+    private String updated;
 
 }

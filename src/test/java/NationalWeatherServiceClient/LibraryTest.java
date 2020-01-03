@@ -12,6 +12,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import gov.noaa.WeatherServiceGenerator;
+import gov.noaa.alerts.AlertService;
+import gov.noaa.alerts.Alerts;
 import gov.noaa.glossary.Glossary;
 import gov.noaa.glossary.GlossaryService;
 import gov.noaa.stations.StationService;
@@ -19,6 +21,8 @@ import gov.noaa.stations.Stations;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -29,20 +33,19 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class LibraryTest {
-     static class StringGsonTypeAdapter implements JsonDeserializer<TimeZone> {
-
-        private static StringGsonTypeAdapter INSTANCE = new StringGsonTypeAdapter();
-
-        public static StringGsonTypeAdapter instance() {
-            return INSTANCE;
-        }
-
-        @Override
-        public TimeZone deserialize(JsonElement jsonElement, Type type,
-            JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            return TimeZone.getTimeZone("America/Phoenix");
-        }
+  class LocalDateTimeDeserializer implements JsonDeserializer < LocalDateTime > {
+    @Override
+    public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+        throws JsonParseException {
+      TimeZone tz = TimeZone.getTimeZone("UTC");
+      System.out.println(json.getAsString());
+      System.out.println(LocalDateTime.parse(json.getAsString(),
+          DateTimeFormatter.ISO_DATE_TIME));
+      return LocalDateTime.parse(json.getAsString(),
+          DateTimeFormatter.ISO_DATE_TIME);
     }
+  }
+
     @SneakyThrows
     @Test public void stationsTest() {
       FileInputStream input = new FileInputStream("src/test/resources/stations.json");
@@ -74,6 +77,7 @@ public class LibraryTest {
       while(scanner.hasNext())
         json.append(scanner.nextLine());
 
+
       GsonBuilder gsonBuilder = new GsonBuilder();
       Glossary glossary = gsonBuilder.create().fromJson(json.toString(),Glossary.class);
       GlossaryService service = WeatherServiceGenerator.createService(GlossaryService.class);
@@ -86,4 +90,30 @@ public class LibraryTest {
         Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
       }
     }
+
+//    @SneakyThrows
+//  @Test
+//  public void alertsTest(){
+//      FileInputStream input = new FileInputStream("src/test/resources/alerts.json");
+//      Scanner scanner = new Scanner(input);
+//      String json = "";
+//      while(scanner.hasNext())
+//        json += scanner.nextLine();
+//      System.out.println(json);
+//
+//      ImmutableMap<String,String> params = ImmutableMap.<String, String>builder().put("active","false")
+//          .put("area","CA,CO,CT").put("limit","3").build();
+//
+//      GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,new LocalDateTimeDeserializer());
+//      Alerts alerts = gsonBuilder.create().fromJson(json,Alerts.class);
+//      AlertService service = WeatherServiceGenerator.createService(AlertService.class);
+//      Call<Alerts> callSync = service.getAlerts(params);
+//      try{
+//        Response<Alerts> response = callSync.execute();
+//        Alerts alertsResponse = response.body();
+//        assertEquals(alerts,alertsResponse);
+//      }catch (IOException e){
+//        Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+//      }
+//    }
 }

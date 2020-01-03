@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Feature {
 
-    private Geometry geometry;
-    private String id;
-    private String type;
+    protected Geometry geometry;
+    protected String id;
+    protected String type;
 
 }

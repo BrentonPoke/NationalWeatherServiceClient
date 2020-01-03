@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @SuppressWarnings("unused")
 public class Parameters {
 
-    private List<String> BLOCKCHANNEL;
-    private List<String> PIL;
+    protected List<String> BLOCKCHANNEL;
+    protected List<String> PIL;
 
 }

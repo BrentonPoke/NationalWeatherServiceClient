@@ -2,13 +2,13 @@
 package gov.noaa.alerts;
 
 import gov.noaa.Geocode;
-import gov.noaa.Parameters;
 import gov.noaa.Reference;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @SuppressWarnings("unused")
 public class AlertProperties {
 
@@ -17,17 +17,17 @@ public class AlertProperties {
     private String category;
     private String certainty;
     private String description;
-    private LocalDateTime effective;
-    private LocalDateTime ends;
+    private String effective;
+    private String ends;
     private String event;
-    private LocalDateTime expires;
+    private String expires;
     private Geocode geocode;
     private String headline;
     private String id;
     private String instruction;
     private String messageType;
-    private LocalDateTime onset;
-    private Parameters parameters;
+    private String onset;
+    private AlertParameters parameters;
     private List<Reference> references;
     private String response;
     private String sender;

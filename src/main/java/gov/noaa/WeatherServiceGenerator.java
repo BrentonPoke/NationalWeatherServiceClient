@@ -5,9 +5,9 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class WeatherServiceGenerator {
   private static final String BASE_URL = "https://api.weather.gov";
-
   private static Retrofit.Builder builder
       = new Retrofit.Builder()
       .baseUrl(BASE_URL)
