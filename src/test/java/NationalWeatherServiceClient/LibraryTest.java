@@ -28,9 +28,13 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.SneakyThrows;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.junit.Test;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LibraryTest {
   class LocalDateTimeDeserializer implements JsonDeserializer < LocalDateTime > {
@@ -45,6 +49,35 @@ public class LibraryTest {
           DateTimeFormatter.ISO_DATE_TIME);
     }
   }
+
+  static class TestWeatherServiceGenerator {
+    private static final String BASE_URL = "https://weatherservice.free.beeceptor.com";
+    private static Retrofit.Builder builder =
+        new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
+
+    private static Retrofit retrofit = builder.build();
+
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+    public static <S> S createService(Class<S> serviceClass) {
+      return retrofit.create(serviceClass);
+    }
+
+    public static <S> S createService(Class<S> serviceClass, final String token) {
+      if (token != null) {
+        httpClient.interceptors().clear();
+        httpClient.addInterceptor(
+            chain -> {
+              Request original = chain.request();
+              Request request = original.newBuilder().header("Authorization", token).build();
+              return chain.proceed(request);
+            });
+        builder.client(httpClient.build());
+        retrofit = builder.build();
+      }
+      return retrofit.create(serviceClass);
+    }
+    }
 
     @SneakyThrows
     @Test public void stationsTest() {
@@ -91,29 +124,29 @@ public class LibraryTest {
       }
     }
 
-//    @SneakyThrows
-//  @Test
-//  public void alertsTest(){
-//      FileInputStream input = new FileInputStream("src/test/resources/alerts.json");
-//      Scanner scanner = new Scanner(input);
-//      String json = "";
-//      while(scanner.hasNext())
-//        json += scanner.nextLine();
-//      System.out.println(json);
-//
-//      ImmutableMap<String,String> params = ImmutableMap.<String, String>builder().put("active","false")
-//          .put("area","CA,CO,CT").put("limit","3").build();
-//
-//      GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,new LocalDateTimeDeserializer());
-//      Alerts alerts = gsonBuilder.create().fromJson(json,Alerts.class);
-//      AlertService service = WeatherServiceGenerator.createService(AlertService.class);
-//      Call<Alerts> callSync = service.getAlerts(params);
-//      try{
-//        Response<Alerts> response = callSync.execute();
-//        Alerts alertsResponse = response.body();
-//        assertEquals(alerts,alertsResponse);
-//      }catch (IOException e){
-//        Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
-//      }
-//    }
+    @SneakyThrows
+  @Test
+  public void alertsTest(){
+      FileInputStream input = new FileInputStream("src/test/resources/alerts.json");
+      Scanner scanner = new Scanner(input);
+      String json = "";
+      while(scanner.hasNext())
+        json += scanner.nextLine();
+      System.out.println(json);
+
+      ImmutableMap<String,String> params = ImmutableMap.<String, String>builder().put("active","true")
+          .put("area","CA,CO,CT").put("certainty","likely").put("status","actual").put("limit","3").build();
+
+      GsonBuilder gsonBuilder = new GsonBuilder();
+      Alerts alerts = gsonBuilder.create().fromJson(json,Alerts.class);
+      AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
+      Call<Alerts> callSync = service.getAlerts(params);
+      try{
+        Response<Alerts> response = callSync.execute();
+        Alerts alertsResponse = response.body();
+        assertEquals(alerts,alertsResponse);
+      }catch (IOException e){
+        Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+      }
+    }
 }
