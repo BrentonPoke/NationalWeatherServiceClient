@@ -50,6 +50,7 @@ public class LibraryTest {
     }
   }
 
+
   static class TestWeatherServiceGenerator {
     private static final String BASE_URL = "https://weatherservice.free.beeceptor.com";
     private static Retrofit.Builder builder =
@@ -129,16 +130,16 @@ public class LibraryTest {
   public void alertsTest(){
       FileInputStream input = new FileInputStream("src/test/resources/alerts.json");
       Scanner scanner = new Scanner(input);
-      String json = "";
+      StringBuilder json = new StringBuilder();
       while(scanner.hasNext())
-        json += scanner.nextLine();
+        json.append(scanner.nextLine());
       System.out.println(json);
 
       ImmutableMap<String,String> params = ImmutableMap.<String, String>builder().put("active","true")
           .put("area","CA,CO,CT").put("certainty","likely").put("status","actual").put("limit","3").build();
 
       GsonBuilder gsonBuilder = new GsonBuilder();
-      Alerts alerts = gsonBuilder.create().fromJson(json,Alerts.class);
+      Alerts alerts = gsonBuilder.create().fromJson(json.toString(),Alerts.class);
       AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
       Call<Alerts> callSync = service.getAlerts(params);
       try{
