@@ -11,7 +11,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import gov.noaa.WeatherServiceException;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
