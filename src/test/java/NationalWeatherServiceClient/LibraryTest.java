@@ -11,8 +11,10 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import gov.noaa.WeatherServiceException;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
+import gov.noaa.alerts.AlertTypes;
 import gov.noaa.alerts.Alerts;
 import gov.noaa.glossary.Glossary;
 import gov.noaa.glossary.GlossaryService;
@@ -125,6 +127,28 @@ public class LibraryTest {
       }
     }
 
+  @SneakyThrows
+  @Test public void alertTypeTest(){
+    FileInputStream input = new FileInputStream("src/test/resources/AlertTypes.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    AlertTypes alertTypes = gsonBuilder.create().fromJson(json.toString(),AlertTypes.class);
+    AlertService service = WeatherServiceGenerator.createService(AlertService.class);
+    Call<AlertTypes> callSync = service.getAlertTypes();
+    try{
+      Response<AlertTypes> response = callSync.execute();
+      AlertTypes glossary1 = response.body();
+      assertEquals(alertTypes,glossary1);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+
     @SneakyThrows
   @Test
   public void alertsTest(){
@@ -150,4 +174,53 @@ public class LibraryTest {
         Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
       }
     }
+
+  @SneakyThrows
+  @Test
+  public void ActiveAlertsTest(){
+    FileInputStream input = new FileInputStream("src/test/resources/alerts.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    System.out.println(json);
+
+    ImmutableMap<String,String> params = ImmutableMap.<String, String>builder()
+        .put("area","CA,CO,CT").put("certainty","likely").put("status","actual").put("limit","3").build();
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Alerts alerts = gsonBuilder.create().fromJson(json.toString(),Alerts.class);
+    AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
+    Call<Alerts> callSync = service.getAlerts(params);
+    try{
+      Response<Alerts> response = callSync.execute();
+      Alerts alertsResponse = response.body();
+      assertEquals(alerts,alertsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+
+  @SneakyThrows
+  @Test
+  public void AlertByIDTest(){
+    FileInputStream input = new FileInputStream("src/test/resources/IDAlert.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    System.out.println(json);
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Alerts alerts = gsonBuilder.create().fromJson(json.toString(),Alerts.class);
+    AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
+    Call<Alerts> callSync = service.getAlertByID("NWS-IDP-PROD-3988177-3384711");
+    try{
+      Response<Alerts> response = callSync.execute();
+      Alerts alertsResponse = response.body();
+      assertEquals(alerts,alertsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
 }
