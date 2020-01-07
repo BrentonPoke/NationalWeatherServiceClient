@@ -17,4 +17,6 @@ public interface AlertService {
  public Call<Alerts> getAlertByID(@Path("alertid") String alertid);
  @GET("/alerts/types")
  public Call<AlertTypes> getAlertTypes();
+ @GET("/alerts/active/region/{region}")
+ public Call<Alerts> getAlertsByMarineRegion(@Path(value = "region") String region);
 }

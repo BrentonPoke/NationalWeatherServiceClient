@@ -226,6 +226,29 @@ public class LibraryTest {
 
   @SneakyThrows
   @Test
+  public void getRegionByIDTest(){
+    FileInputStream input = new FileInputStream("src/test/resources/getRegion.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    System.out.println(json);
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Alerts alerts = gsonBuilder.create().fromJson(json.toString(),Alerts.class);
+    AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
+    Call<Alerts> callSync = service.getAlertsByMarineRegion("GL");
+    try{
+      Response<Alerts> response = callSync.execute();
+      Alerts alertsResponse = response.body();
+      assertEquals(alerts,alertsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+
+  @SneakyThrows
+  @Test
   public void ZoneByIDTest() {
     FileInputStream input = new FileInputStream("src/test/resources/zonebyzoneid.json");
     Scanner scanner = new Scanner(input);
