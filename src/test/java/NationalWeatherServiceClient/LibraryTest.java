@@ -5,6 +5,7 @@ package NationalWeatherServiceClient;
 
 import static org.junit.Assert.assertEquals;
 
+import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -17,6 +18,8 @@ import gov.noaa.alerts.AlertTypes;
 import gov.noaa.alerts.Alerts;
 import gov.noaa.glossary.Glossary;
 import gov.noaa.glossary.GlossaryService;
+import gov.noaa.gridpoints.Forecast;
+import gov.noaa.gridpoints.GridpointsService;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
 import java.io.FileInputStream;
@@ -292,4 +295,27 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
     }
   }
+
+//  @SneakyThrows
+//  @Test
+//  public void gridpointsForecastRawTest() {
+//    FileInputStream input = new FileInputStream("src/test/resources/gridpoints.json");
+//    Scanner scanner = new Scanner(input);
+//    StringBuilder json = new StringBuilder();
+//    while(scanner.hasNext())
+//      json.append(scanner.nextLine());
+//    System.out.println(json);
+//
+//    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+//    Forecast alerts = gsonBuilder.create().fromJson(json.toString(), Forecast.class);
+//    GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
+//    Call<Forecast> callSync = service.getRawForecastData("EAX",60,90);
+//    try{
+//      Response<Forecast> response = callSync.execute();
+//     Forecast alertsResponse = response.body();
+//      assertEquals(alerts,alertsResponse);
+//    }catch (IOException e){
+//      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+//    }
+//  }
 }
