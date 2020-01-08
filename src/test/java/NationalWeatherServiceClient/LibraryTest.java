@@ -57,7 +57,7 @@ public class LibraryTest {
 
 
   static class TestWeatherServiceGenerator {
-    private static final String BASE_URL = "https://weatherservice.free.beeceptor.com";
+    private static final String BASE_URL = "https://0871216c-c4bd-4bd8-b325-f27e3d810156.mock.pstmn.io";
     private static Retrofit.Builder builder =
         new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
 
