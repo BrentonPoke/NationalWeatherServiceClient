@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Forecast{
 
 	@SerializedName("geometry")
-	private Geometry geometry;
+	private static Geometry geometry;
 
 	@SerializedName("id")
 	private String id;

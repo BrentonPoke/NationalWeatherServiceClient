@@ -2,7 +2,11 @@ package gov.noaa.gridpoints;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@Data
 public class Measurement {
 
 	@SerializedName("uom")
