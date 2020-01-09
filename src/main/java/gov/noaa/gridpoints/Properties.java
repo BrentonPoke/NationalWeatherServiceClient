@@ -90,7 +90,7 @@ public class Properties{
 	private Measurement waveHeight;
 	private Measurement wavePeriod;
 	private Measurement wavePeriod2;
-	private Measurement weather;
+	private WeatherValue weather;
 	private Measurement windChill;
 	private Measurement windDirection;
 	private Measurement windGust;

@@ -12,5 +12,5 @@ public class Value{
 	private String validTime;
 
 	@SerializedName("value")
-	private double value;
+	private Double value;
 }
