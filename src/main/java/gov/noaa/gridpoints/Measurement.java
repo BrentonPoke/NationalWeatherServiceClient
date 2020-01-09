@@ -17,4 +17,14 @@ public class Measurement {
 
 	@SerializedName("sourceUnit")
 	private String sourceUnit;
+	
+	@Data
+	class Value{
+		
+		@SerializedName("validTime")
+		private String validTime;
+		
+		@SerializedName("value")
+		private Double value;
+	}
 }

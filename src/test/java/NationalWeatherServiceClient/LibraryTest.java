@@ -58,7 +58,7 @@ public class LibraryTest {
 
 
   static class TestWeatherServiceGenerator {
-    private static final String BASE_URL = "https://a98afe3c-d37b-428b-8a83-37f8ea986a4f.mock.pstmn.io";
+    private static final String BASE_URL = "https://52d25b91-f3a0-4fcf-862d-9766d4f82c04.mock.pstmn.io";
     private static Retrofit.Builder builder =
         new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
 
@@ -305,16 +305,15 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while(scanner.hasNext())
       json.append(scanner.nextLine());
-    System.out.println(json);
 
     GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
-    Forecast alerts = gsonBuilder.create().fromJson(json.toString(), Forecast.class);
+    Forecast rawData = gsonBuilder.create().fromJson(json.toString(), Forecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
-    Call<Forecast> callSync = service.getRawForecastData("EAX",60,90);
+    Call<Forecast> callSync = service.getRawForecastData("TOP",40,60);
     try{
       Response<Forecast> response = callSync.execute();
-     Forecast alertsResponse = response.body();
-      assertEquals(alerts,alertsResponse);
+     Forecast rawResponse = response.body();
+      assertEquals(rawData,rawResponse);
     }catch (IOException e){
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
     }

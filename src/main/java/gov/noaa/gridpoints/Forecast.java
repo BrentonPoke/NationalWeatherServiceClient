@@ -1,8 +1,5 @@
 package gov.noaa.gridpoints;
 
-
-
-
 import com.github.filosganga.geogson.model.Geometry;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;

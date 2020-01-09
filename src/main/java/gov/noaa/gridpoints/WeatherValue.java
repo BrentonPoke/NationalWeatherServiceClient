@@ -13,7 +13,8 @@ public class WeatherValue {
     private String validTime;
     private List<WeatherData> value;
     
-    private static class WeatherData {
+    @Data
+    class WeatherData {
         private String attributes;
         private String coverage;
         private String intensity;
