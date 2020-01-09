@@ -2,6 +2,7 @@ package gov.noaa.gridpoints;
 
 import com.google.gson.annotations.SerializedName;
 import gov.noaa.stations.Elevation;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -35,6 +36,9 @@ public class Properties{
 
 	@SerializedName("gridId")
 	private String gridId;
+	
+	@SerializedName(("periods"))
+	private List<Period> periods;
 
 	private Measurement apparentTemperature;
 	private Measurement atmosphericDispersionIndex;

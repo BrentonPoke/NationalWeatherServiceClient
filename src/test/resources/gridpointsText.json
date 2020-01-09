@@ -1,0 +1,275 @@
+{
+  "@context": [
+    "https://raw.githubusercontent.com/geojson/geojson-ld/master/contexts/geojson-base.jsonld",
+    {
+      "wx": "https://api.weather.gov/ontology#",
+      "geo": "http://www.opengis.net/ont/geosparql#",
+      "unit": "http://codes.wmo.int/common/unit/",
+      "@vocab": "https://api.weather.gov/ontology#"
+    }
+  ],
+  "type": "Feature",
+  "geometry": {
+    "type": "GeometryCollection",
+    "geometries": [
+      {
+        "type": "Point",
+        "coordinates": [
+          -94.3704764,
+          39.5466452
+        ]
+      },
+      {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -94.3847268,
+              39.5577297
+            ],
+            [
+              -94.3848567,
+              39.5356615
+            ],
+            [
+              -94.35622910000001,
+              39.535559000000006
+            ],
+            [
+              -94.3560932,
+              39.557627200000006
+            ],
+            [
+              -94.3847268,
+              39.5577297
+            ]
+          ]
+        ]
+      }
+    ]
+  },
+  "properties": {
+    "updated": "2020-01-09T12:11:11+00:00",
+    "units": "si",
+    "forecastGenerator": "BaselineForecastGenerator",
+    "generatedAt": "2020-01-09T12:22:52+00:00",
+    "updateTime": "2020-01-09T12:11:11+00:00",
+    "validTimes": "2020-01-09T06:00:00+00:00/P7DT19H",
+    "elevation": {
+      "value": 313.944,
+      "unitCode": "unit:m"
+    },
+    "periods": [
+      {
+        "number": 1,
+        "name": "Today",
+        "startTime": "2020-01-09T06:00:00-06:00",
+        "endTime": "2020-01-09T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": 16,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "13 to 35 km/h",
+        "windDirection": "SW",
+        "icon": "https://api.weather.gov/icons/land/day/wind_bkn/rain_showers,30?size=medium",
+        "shortForecast": "Mostly Cloudy then Chance Rain Showers",
+        "detailedForecast": "A slight chance of drizzle between noon and 1pm, then a chance of rain showers and a slight chance of drizzle. Mostly cloudy, with a high near 16. Southwest wind 13 to 35 km/h, with gusts as high as 69 km/h. Chance of precipitation is 30%."
+      },
+      {
+        "number": 2,
+        "name": "Tonight",
+        "startTime": "2020-01-09T18:00:00-06:00",
+        "endTime": "2020-01-10T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": 2,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "7 to 15 km/h",
+        "windDirection": "NNW",
+        "icon": "https://api.weather.gov/icons/land/night/rain_showers,20/rain_showers,30?size=medium",
+        "shortForecast": "Chance Rain Showers",
+        "detailedForecast": "A chance of rain showers. Mostly cloudy, with a low around 2. North northwest wind 7 to 15 km/h. Chance of precipitation is 30%. New rainfall amounts less than 0.5 cm possible."
+      },
+      {
+        "number": 3,
+        "name": "Friday",
+        "startTime": "2020-01-10T06:00:00-06:00",
+        "endTime": "2020-01-10T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": 3,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "17 to 30 km/h",
+        "windDirection": "NNE",
+        "icon": "https://api.weather.gov/icons/land/day/rain_showers,70/rain_fzra,100?size=medium",
+        "shortForecast": "Rain Showers",
+        "detailedForecast": "Rain showers before 5pm, then rain showers and a slight chance of freezing rain. Cloudy, with a high near 3. North northeast wind 17 to 30 km/h, with gusts as high as 44 km/h. Chance of precipitation is 100%. New rainfall amounts between 0.5 and 1 cm possible."
+      },
+      {
+        "number": 4,
+        "name": "Friday Night",
+        "startTime": "2020-01-10T18:00:00-06:00",
+        "endTime": "2020-01-11T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": -8,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "24 to 30 km/h",
+        "windDirection": "N",
+        "icon": "https://api.weather.gov/icons/land/night/snow_fzra,90/sleet,60?size=medium",
+        "shortForecast": "Sleet then Snow Showers",
+        "detailedForecast": "Rain showers before 7pm, then rain showers and a slight chance of freezing rain between 7pm and 8pm, then sleet and snow showers likely between 8pm and 9pm, then snow showers and a chance of sleet. Cloudy, with a low around -8. North wind 24 to 30 km/h, with gusts as high as 50 km/h. Chance of precipitation is 90%. New snow accumulation of 2.5 to 5 cm possible. Little or no ice accumulation expected."
+      },
+      {
+        "number": 5,
+        "name": "Saturday",
+        "startTime": "2020-01-11T06:00:00-06:00",
+        "endTime": "2020-01-11T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": -4,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "13 to 24 km/h",
+        "windDirection": "N",
+        "icon": "https://api.weather.gov/icons/land/day/snow,50/snow,40?size=medium",
+        "shortForecast": "Chance Snow",
+        "detailedForecast": "A chance of snow. Mostly cloudy, with a high near -4. North wind 13 to 24 km/h, with gusts as high as 46 km/h. Chance of precipitation is 50%. New snow accumulation of 7 to 9 cm possible."
+      },
+      {
+        "number": 6,
+        "name": "Saturday Night",
+        "startTime": "2020-01-11T18:00:00-06:00",
+        "endTime": "2020-01-12T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": -11,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "4 to 11 km/h",
+        "windDirection": "WNW",
+        "icon": "https://api.weather.gov/icons/land/night/cold?size=medium",
+        "shortForecast": "Partly Cloudy",
+        "detailedForecast": "Partly cloudy, with a low around -11."
+      },
+      {
+        "number": 7,
+        "name": "Sunday",
+        "startTime": "2020-01-12T06:00:00-06:00",
+        "endTime": "2020-01-12T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": 1,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "4 to 9 km/h",
+        "windDirection": "SSE",
+        "icon": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+        "shortForecast": "Partly Sunny",
+        "detailedForecast": "Partly sunny, with a high near 1."
+      },
+      {
+        "number": 8,
+        "name": "Sunday Night",
+        "startTime": "2020-01-12T18:00:00-06:00",
+        "endTime": "2020-01-13T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": -5,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "6 km/h",
+        "windDirection": "SSW",
+        "icon": "https://api.weather.gov/icons/land/night/sct?size=medium",
+        "shortForecast": "Partly Cloudy",
+        "detailedForecast": "Partly cloudy, with a low around -5."
+      },
+      {
+        "number": 9,
+        "name": "Monday",
+        "startTime": "2020-01-13T06:00:00-06:00",
+        "endTime": "2020-01-13T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": 6,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "4 to 9 km/h",
+        "windDirection": "SSE",
+        "icon": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+        "shortForecast": "Partly Sunny",
+        "detailedForecast": "Partly sunny, with a high near 6."
+      },
+      {
+        "number": 10,
+        "name": "Monday Night",
+        "startTime": "2020-01-13T18:00:00-06:00",
+        "endTime": "2020-01-14T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": 0,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "9 km/h",
+        "windDirection": "S",
+        "icon": "https://api.weather.gov/icons/land/night/rain/snow,30?size=medium",
+        "shortForecast": "Chance Light Rain then Chance Rain And Snow",
+        "detailedForecast": "A chance of rain before 5am, then a chance of rain and snow. Mostly cloudy, with a low around 0. Chance of precipitation is 30%."
+      },
+      {
+        "number": 11,
+        "name": "Tuesday",
+        "startTime": "2020-01-14T06:00:00-06:00",
+        "endTime": "2020-01-14T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": 7,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "6 to 11 km/h",
+        "windDirection": "NW",
+        "icon": "https://api.weather.gov/icons/land/day/sct?size=medium",
+        "shortForecast": "Mostly Sunny",
+        "detailedForecast": "Mostly sunny, with a high near 7."
+      },
+      {
+        "number": 12,
+        "name": "Tuesday Night",
+        "startTime": "2020-01-14T18:00:00-06:00",
+        "endTime": "2020-01-15T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": -6,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "6 to 13 km/h",
+        "windDirection": "N",
+        "icon": "https://api.weather.gov/icons/land/night/sct/snow?size=medium",
+        "shortForecast": "Partly Cloudy then Slight Chance Light Snow",
+        "detailedForecast": "A slight chance of snow after midnight. Partly cloudy, with a low around -6."
+      },
+      {
+        "number": 13,
+        "name": "Wednesday",
+        "startTime": "2020-01-15T06:00:00-06:00",
+        "endTime": "2020-01-15T18:00:00-06:00",
+        "isDaytime": true,
+        "temperature": 1,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "17 km/h",
+        "windDirection": "N",
+        "icon": "https://api.weather.gov/icons/land/day/snow?size=medium",
+        "shortForecast": "Slight Chance Light Snow",
+        "detailedForecast": "A slight chance of snow. Partly sunny, with a high near 1."
+      },
+      {
+        "number": 14,
+        "name": "Wednesday Night",
+        "startTime": "2020-01-15T18:00:00-06:00",
+        "endTime": "2020-01-16T06:00:00-06:00",
+        "isDaytime": false,
+        "temperature": -12,
+        "temperatureUnit": "C",
+        "temperatureTrend": null,
+        "windSpeed": "17 km/h",
+        "windDirection": "N",
+        "icon": "https://api.weather.gov/icons/land/night/cold?size=medium",
+        "shortForecast": "Partly Cloudy",
+        "detailedForecast": "Partly cloudy, with a low around -12."
+      }
+    ]
+  }
+}

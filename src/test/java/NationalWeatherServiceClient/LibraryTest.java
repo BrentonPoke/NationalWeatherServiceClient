@@ -20,6 +20,7 @@ import gov.noaa.glossary.Glossary;
 import gov.noaa.glossary.GlossaryService;
 import gov.noaa.gridpoints.Forecast;
 import gov.noaa.gridpoints.GridpointsService;
+import gov.noaa.gridpoints.TextForecast;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
 import java.io.FileInputStream;
@@ -57,7 +58,7 @@ public class LibraryTest {
 
 
   static class TestWeatherServiceGenerator {
-    private static final String BASE_URL = "https://0871216c-c4bd-4bd8-b325-f27e3d810156.mock.pstmn.io";
+    private static final String BASE_URL = "https://a98afe3c-d37b-428b-8a83-37f8ea986a4f.mock.pstmn.io";
     private static Retrofit.Builder builder =
         new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
 
@@ -314,6 +315,29 @@ public class LibraryTest {
       Response<Forecast> response = callSync.execute();
      Forecast alertsResponse = response.body();
       assertEquals(alerts,alertsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+  
+  @SneakyThrows
+  @Test
+  public void gridpointsTextForecastTest() {
+    FileInputStream input = new FileInputStream("src/test/resources/gridpointsText.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+    TextForecast forecast = gsonBuilder.create().fromJson(json.toString(), TextForecast.class);
+    GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
+    Call<TextForecast> callSync = service.getTextForecast("EAX",50,70,"si");
+    try{
+      Response<TextForecast> response = callSync.execute();
+      TextForecast textResponse = response.body();
+      
+      assertEquals(forecast,textResponse);
     }catch (IOException e){
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
     }
