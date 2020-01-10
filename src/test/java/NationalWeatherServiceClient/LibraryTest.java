@@ -58,7 +58,7 @@ public class LibraryTest {
 
 
   static class TestWeatherServiceGenerator {
-    private static final String BASE_URL = "https://52d25b91-f3a0-4fcf-862d-9766d4f82c04.mock.pstmn.io";
+    private static final String BASE_URL = "https://37e6db5e-3ccd-4bbc-a1e4-835b4679eae4.mock.pstmn.io";
     private static Retrofit.Builder builder =
         new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
 
@@ -332,6 +332,29 @@ public class LibraryTest {
     TextForecast forecast = gsonBuilder.create().fromJson(json.toString(), TextForecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<TextForecast> callSync = service.getTextForecast("EAX",50,70,"si");
+    try{
+      Response<TextForecast> response = callSync.execute();
+      TextForecast textResponse = response.body();
+      
+      assertEquals(forecast,textResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+  
+  @SneakyThrows
+  @Test
+  public void gridpointsHourlyTextForecastTest() {
+    FileInputStream input = new FileInputStream("src/test/resources/gridpointsHourlyText.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+    TextForecast forecast = gsonBuilder.create().fromJson(json.toString(), TextForecast.class);
+    GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
+    Call<TextForecast> callSync = service.getTextForecast("TOP",50,70,"us");
     try{
       Response<TextForecast> response = callSync.execute();
       TextForecast textResponse = response.body();

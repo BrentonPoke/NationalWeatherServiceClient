@@ -18,4 +18,11 @@ public interface GridpointsService {
       @Path(value = "x") Integer x,
       @Path("y") Integer y,
       @Query(value = "units") String unit);
+  
+  @GET("/gridpoints/{wfo}/{x},{y}/forecast/hourly") // Returns a textual forecast for a 2.5km grid area
+  public Call<TextForecast> getHourlyTextForecast(
+      @Path(value = "wfo") String weatherForecastStation,
+      @Path(value = "x") Integer x,
+      @Path("y") Integer y,
+      @Query(value = "units") String unit);
 }
