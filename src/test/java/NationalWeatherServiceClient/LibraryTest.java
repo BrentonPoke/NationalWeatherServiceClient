@@ -364,4 +364,27 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
     }
   }
+  
+  @SneakyThrows
+  @Test
+  public void gridpointsStationsTest() {
+    FileInputStream input = new FileInputStream("src/test/resources/gridpointsStations.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+    Stations forecast = gsonBuilder.create().fromJson(json.toString(), Stations.class);
+    GridpointsService service = WeatherServiceGenerator.createService(GridpointsService.class);
+    Call<Stations> callSync = service.getStationsByGridArea("TOP",50,70);
+    try{
+      Response<Stations> response = callSync.execute();
+      Stations stationsResponse = response.body();
+      
+      assertEquals(forecast,stationsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
 }
