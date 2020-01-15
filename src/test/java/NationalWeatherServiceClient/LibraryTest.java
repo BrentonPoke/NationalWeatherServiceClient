@@ -21,6 +21,7 @@ import gov.noaa.glossary.GlossaryService;
 import gov.noaa.gridpoints.Forecast;
 import gov.noaa.gridpoints.GridpointsService;
 import gov.noaa.gridpoints.TextForecast;
+import gov.noaa.stations.Station;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
 import java.io.FileInputStream;
@@ -381,6 +382,29 @@ public class LibraryTest {
     try{
       Response<Stations> response = callSync.execute();
       Stations stationsResponse = response.body();
+      
+      assertEquals(forecast,stationsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+  
+  @SneakyThrows
+  @Test
+  public void StationTest() {
+    FileInputStream input = new FileInputStream("src/test/resources/station.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+    Station forecast = gsonBuilder.create().fromJson(json.toString(), Station.class);
+    StationService service = WeatherServiceGenerator.createService(StationService.class);
+    Call<Station> callSync = service.getStation("KMYZ");
+    try{
+      Response<Station> response = callSync.execute();
+      Station stationsResponse = response.body();
       
       assertEquals(forecast,stationsResponse);
     }catch (IOException e){

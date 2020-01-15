@@ -1,7 +1,6 @@
 package gov.noaa.gridpoints;
 
 import com.github.filosganga.geogson.model.Geometry;
-import gov.noaa.Context;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
