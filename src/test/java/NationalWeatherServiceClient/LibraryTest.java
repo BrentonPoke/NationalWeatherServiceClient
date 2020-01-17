@@ -6,6 +6,9 @@ package NationalWeatherServiceClient;
 import static org.junit.Assert.assertEquals;
 
 import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
+import com.github.filosganga.geogson.model.Coordinates;
+import com.github.filosganga.geogson.model.Point;
+import com.github.filosganga.geogson.model.positions.SinglePosition;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -21,6 +24,8 @@ import gov.noaa.glossary.GlossaryService;
 import gov.noaa.gridpoints.Forecast;
 import gov.noaa.gridpoints.GridpointsService;
 import gov.noaa.gridpoints.TextForecast;
+import gov.noaa.points.PointData;
+import gov.noaa.points.PointService;
 import gov.noaa.stations.Station;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
@@ -407,6 +412,30 @@ public class LibraryTest {
       Station stationsResponse = response.body();
       
       assertEquals(forecast,stationsResponse);
+    }catch (IOException e){
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
+    }
+  }
+  
+  @SneakyThrows
+  @Test
+  public void PointsTest() {
+    FileInputStream input = new FileInputStream("src/test/resources/points.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while(scanner.hasNext())
+      json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+    PointData pointData = gsonBuilder.create().fromJson(json.toString(), PointData.class);
+    PointService service = WeatherServiceGenerator.createService(PointService.class);
+    SinglePosition position = new SinglePosition(Coordinates.of(-96.6306,39.8553));
+    Call<PointData> callSync = service.getPointData(new Point(position));
+    try{
+      Response<PointData> response = callSync.execute();
+      PointData pointsResponse = response.body();
+      
+      assertEquals(pointData,pointsResponse);
     }catch (IOException e){
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE,e.getMessage());
     }

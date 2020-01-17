@@ -1,0 +1,92 @@
+{
+  "@context": [
+    "https://raw.githubusercontent.com/geojson/geojson-ld/master/contexts/geojson-base.jsonld",
+    {
+      "wx": "https://api.weather.gov/ontology#",
+      "s": "https://schema.org/",
+      "geo": "http://www.opengis.net/ont/geosparql#",
+      "unit": "http://codes.wmo.int/common/unit/",
+      "@vocab": "https://api.weather.gov/ontology#",
+      "geometry": {
+        "@id": "s:GeoCoordinates",
+        "@type": "geo:wktLiteral"
+      },
+      "city": "s:addressLocality",
+      "state": "s:addressRegion",
+      "distance": {
+        "@id": "s:Distance",
+        "@type": "s:QuantitativeValue"
+      },
+      "bearing": {
+        "@type": "s:QuantitativeValue"
+      },
+      "value": {
+        "@id": "s:value"
+      },
+      "unitCode": {
+        "@id": "s:unitCode",
+        "@type": "@id"
+      },
+      "forecastOffice": {
+        "@type": "@id"
+      },
+      "forecastGridData": {
+        "@type": "@id"
+      },
+      "publicZone": {
+        "@type": "@id"
+      },
+      "county": {
+        "@type": "@id"
+      }
+    }
+  ],
+  "id": "https://api.weather.gov/points/39.8553,-96.6306",
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -96.6306,
+      39.8553
+    ]
+  },
+  "properties": {
+    "@id": "https://api.weather.gov/points/39.8553,-96.6306",
+    "@type": "wx:Point",
+    "cwa": "TOP",
+    "forecastOffice": "https://api.weather.gov/offices/TOP",
+    "gridX": 47,
+    "gridY": 84,
+    "forecast": "https://api.weather.gov/gridpoints/TOP/47,84/forecast",
+    "forecastHourly": "https://api.weather.gov/gridpoints/TOP/47,84/forecast/hourly",
+    "forecastGridData": "https://api.weather.gov/gridpoints/TOP/47,84",
+    "observationStations": "https://api.weather.gov/gridpoints/TOP/47,84/stations",
+    "relativeLocation": {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.638111,
+          39.842671
+        ]
+      },
+      "properties": {
+        "city": "Marysville",
+        "state": "KS",
+        "distance": {
+          "value": 1543.74565248831,
+          "unitCode": "unit:m"
+        },
+        "bearing": {
+          "value": 24,
+          "unitCode": "unit:degrees_true"
+        }
+      }
+    },
+    "forecastZone": "https://api.weather.gov/zones/forecast/KSZ010",
+    "county": "https://api.weather.gov/zones/county/KSC117",
+    "fireWeatherZone": "https://api.weather.gov/zones/fire/KSZ010",
+    "timeZone": "America/Chicago",
+    "radarStation": "KTWX"
+  }
+}
