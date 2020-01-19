@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @SuppressWarnings("unused")
-public class ProductType {
+public class ProductTypes {
     @SerializedName("@graph")
     List<Type> graph;
     

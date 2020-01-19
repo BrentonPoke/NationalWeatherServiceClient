@@ -10,4 +10,6 @@ public interface ProductsService {
   Call<Products> getProducts(@QueryMap Map<String, String> parameters);
   @GET("/products/locations")
   Call<ProductLocations> getProductLocations();
+  @GET("products/types")
+  Call<ProductTypes> getProductTypes();
 }

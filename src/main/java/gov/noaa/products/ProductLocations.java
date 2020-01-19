@@ -1,6 +1,5 @@
 package gov.noaa.products;
 
-import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
 import lombok.NoArgsConstructor;

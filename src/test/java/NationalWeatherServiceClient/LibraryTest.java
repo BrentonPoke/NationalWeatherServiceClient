@@ -28,6 +28,7 @@ import gov.noaa.gridpoints.TextForecast;
 import gov.noaa.points.PointData;
 import gov.noaa.points.PointService;
 import gov.noaa.products.ProductLocations;
+import gov.noaa.products.ProductTypes;
 import gov.noaa.products.Products;
 import gov.noaa.products.ProductsService;
 import gov.noaa.stations.Station;
@@ -494,6 +495,29 @@ public class LibraryTest {
       Response<ProductLocations> response = callSync.execute();
       ProductLocations productsResponse = response.body();
       System.out.println(productsResponse);
+      assertEquals(products, productsResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void ProductTypesTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/productTypes.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    ProductTypes products = gsonBuilder.create().fromJson(json.toString(), ProductTypes.class);
+    
+    ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
+    Call<ProductTypes> callSync = service.getProductTypes();
+    try {
+      Response<ProductTypes> response = callSync.execute();
+      ProductTypes productsResponse = response.body();
+
       assertEquals(products, productsResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
