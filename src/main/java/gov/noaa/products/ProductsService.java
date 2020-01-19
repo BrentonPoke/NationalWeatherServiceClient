@@ -3,6 +3,7 @@ package gov.noaa.products;
 import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 public interface ProductsService {
@@ -12,4 +13,6 @@ public interface ProductsService {
   Call<ProductLocations> getProductLocations();
   @GET("products/types")
   Call<ProductTypes> getProductTypes();
+  @GET("/products/types/{typeId}")
+  Call<Products> getProductsByID(@Path(value = "typeId") String typeid);
 }

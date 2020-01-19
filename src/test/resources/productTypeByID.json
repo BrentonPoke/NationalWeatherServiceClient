@@ -1,0 +1,43 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@graph": [
+    {
+      "@id": "https://api.weather.gov/products/028a7fdd-9573-4b44-a28b-b8714c32f43d",
+      "id": "028a7fdd-9573-4b44-a28b-b8714c32f43d",
+      "wmoCollectiveId": "NOUS71",
+      "issuingOffice": "KNES",
+      "issuanceTime": "2020-01-17T23:14:00+00:00",
+      "productCode": "ADA",
+      "productName": "Alarm/Alert Administrative Msg"
+    },
+    {
+      "@id": "https://api.weather.gov/products/b61f30cf-053f-498f-9519-29b8575fecae",
+      "id": "b61f30cf-053f-498f-9519-29b8575fecae",
+      "wmoCollectiveId": "NOUS71",
+      "issuingOffice": "KNES",
+      "issuanceTime": "2020-01-17T22:44:00+00:00",
+      "productCode": "ADA",
+      "productName": "Alarm/Alert Administrative Msg"
+    },
+    {
+      "@id": "https://api.weather.gov/products/d4d67f50-88fb-4aa6-a928-5caeb845e7f3",
+      "id": "d4d67f50-88fb-4aa6-a928-5caeb845e7f3",
+      "wmoCollectiveId": "NOUS71",
+      "issuingOffice": "KNES",
+      "issuanceTime": "2020-01-17T19:44:00+00:00",
+      "productCode": "ADA",
+      "productName": "Alarm/Alert Administrative Msg"
+    },
+    {
+      "@id": "https://api.weather.gov/products/daf79539-7c16-41bc-99f2-879e53aa4f92",
+      "id": "daf79539-7c16-41bc-99f2-879e53aa4f92",
+      "wmoCollectiveId": "NOUS71",
+      "issuingOffice": "KNES",
+      "issuanceTime": "2020-01-17T13:34:00+00:00",
+      "productCode": "ADA",
+      "productName": "Alarm/Alert Administrative Msg"
+    }
+  ]
+}
