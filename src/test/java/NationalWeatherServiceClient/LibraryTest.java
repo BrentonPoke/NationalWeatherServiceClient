@@ -15,6 +15,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
@@ -26,21 +27,25 @@ import gov.noaa.gridpoints.GridpointsService;
 import gov.noaa.gridpoints.TextForecast;
 import gov.noaa.points.PointData;
 import gov.noaa.points.PointService;
+import gov.noaa.products.ProductLocations;
 import gov.noaa.products.Products;
 import gov.noaa.products.ProductsService;
 import gov.noaa.stations.Station;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
+import java.awt.SystemTray;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jdk.nashorn.internal.parser.TokenType;
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -464,6 +469,31 @@ public class LibraryTest {
     try {
       Response<Products> response = callSync.execute();
       Products productsResponse = response.body();
+      assertEquals(products, productsResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void ProductLocationsTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/productLocations.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    ProductLocations products = gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
+    
+    System.out.println(products);
+    
+    ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
+    Call<ProductLocations> callSync = service.getProductLocations();
+    try {
+      Response<ProductLocations> response = callSync.execute();
+      ProductLocations productsResponse = response.body();
+      System.out.println(productsResponse);
       assertEquals(products, productsResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
