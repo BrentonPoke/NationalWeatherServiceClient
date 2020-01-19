@@ -15,4 +15,6 @@ public interface ProductsService {
   Call<ProductTypes> getProductTypes();
   @GET("/products/types/{typeId}")
   Call<Products> getProductsByID(@Path(value = "typeId") String typeid);
+  @GET("products/types/{typeId}/locations")
+  Call<ProductLocations> getProductLocationsForType(@Path(value = "typeId") String typeid);
 }

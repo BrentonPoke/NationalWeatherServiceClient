@@ -487,14 +487,12 @@ public class LibraryTest {
     GsonBuilder gsonBuilder = new GsonBuilder();
     ProductLocations products = gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
     
-    System.out.println(products);
-    
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocations();
     try {
       Response<ProductLocations> response = callSync.execute();
       ProductLocations productsResponse = response.body();
-      System.out.println(productsResponse);
+
       assertEquals(products, productsResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
@@ -540,6 +538,29 @@ public class LibraryTest {
     try {
       Response<Products> response = callSync.execute();
       Products productsResponse = response.body();
+      
+      assertEquals(products, productsResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void ProductLocationsByTypeTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/productLocationsfortype.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    ProductLocations products = gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
+    
+    ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
+    Call<ProductLocations> callSync = service.getProductLocationsForType("ABV");
+    try {
+      Response<ProductLocations> response = callSync.execute();
+      ProductLocations productsResponse = response.body();
       
       assertEquals(products, productsResponse);
     } catch (IOException e) {
