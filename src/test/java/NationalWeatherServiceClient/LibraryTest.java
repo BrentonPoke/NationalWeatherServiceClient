@@ -41,12 +41,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.nashorn.internal.parser.TokenType;
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -562,6 +560,29 @@ public class LibraryTest {
       Response<ProductLocations> response = callSync.execute();
       ProductLocations productsResponse = response.body();
       
+      assertEquals(products, productsResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void ProductsByTypeAndLocationTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/productsbytypeandlocation.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+  
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Products products = gsonBuilder.create().fromJson(json.toString(), Products.class);
+  
+    ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
+    Call<Products> callSync = service.getProductsByTypeAndLocation("ABV","APX");
+    try {
+      Response<Products> response = callSync.execute();
+      Products productsResponse = response.body();
+    
       assertEquals(products, productsResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());

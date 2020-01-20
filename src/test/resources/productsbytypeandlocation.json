@@ -1,0 +1,61 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@graph": [
+    {
+      "@id": "https://api.weather.gov/products/fe24dff6-ed06-460d-95a6-3b2d3677ab12",
+      "id": "fe24dff6-ed06-460d-95a6-3b2d3677ab12",
+      "wmoCollectiveId": "UFUS43",
+      "issuingOffice": "KAPX",
+      "issuanceTime": "2020-01-20T12:00:00+00:00",
+      "productCode": "ABV",
+      "productName": "Rawinsonde Data Above 100 Millibars"
+    },
+    {
+      "@id": "https://api.weather.gov/products/7b955784-114c-4100-9f13-9618aa5f34ef",
+      "id": "7b955784-114c-4100-9f13-9618aa5f34ef",
+      "wmoCollectiveId": "UFUS43",
+      "issuingOffice": "KAPX",
+      "issuanceTime": "2020-01-20T00:00:00+00:00",
+      "productCode": "ABV",
+      "productName": "Rawinsonde Data Above 100 Millibars"
+    },
+    {
+      "@id": "https://api.weather.gov/products/3fc5be5a-984d-41f5-b5d6-e1ee7f11d016",
+      "id": "3fc5be5a-984d-41f5-b5d6-e1ee7f11d016",
+      "wmoCollectiveId": "UFUS43",
+      "issuingOffice": "KAPX",
+      "issuanceTime": "2020-01-19T12:00:00+00:00",
+      "productCode": "ABV",
+      "productName": "Rawinsonde Data Above 100 Millibars"
+    },
+    {
+      "@id": "https://api.weather.gov/products/e5545342-3b8f-4784-82b0-6adfe8c78027",
+      "id": "e5545342-3b8f-4784-82b0-6adfe8c78027",
+      "wmoCollectiveId": "UFUS43",
+      "issuingOffice": "KAPX",
+      "issuanceTime": "2020-01-19T00:00:00+00:00",
+      "productCode": "ABV",
+      "productName": "Rawinsonde Data Above 100 Millibars"
+    },
+    {
+      "@id": "https://api.weather.gov/products/e97e4196-ae67-4d14-bdf0-3475e237bc5c",
+      "id": "e97e4196-ae67-4d14-bdf0-3475e237bc5c",
+      "wmoCollectiveId": "UFUS43",
+      "issuingOffice": "KAPX",
+      "issuanceTime": "2020-01-18T12:00:00+00:00",
+      "productCode": "ABV",
+      "productName": "Rawinsonde Data Above 100 Millibars"
+    },
+    {
+      "@id": "https://api.weather.gov/products/34807c05-5ced-4d26-a435-a42adbbe64bb",
+      "id": "34807c05-5ced-4d26-a435-a42adbbe64bb",
+      "wmoCollectiveId": "UFUS43",
+      "issuingOffice": "KAPX",
+      "issuanceTime": "2020-01-18T00:00:00+00:00",
+      "productCode": "ABV",
+      "productName": "Rawinsonde Data Above 100 Millibars"
+    }
+  ]
+}
