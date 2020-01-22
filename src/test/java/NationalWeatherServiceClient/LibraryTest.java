@@ -34,6 +34,8 @@ import gov.noaa.products.ProductsService;
 import gov.noaa.stations.Station;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
+import gov.noaa.zones.ZoneService;
+import gov.noaa.zones.Zones;
 import java.awt.SystemTray;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -584,6 +586,33 @@ public class LibraryTest {
       Products productsResponse = response.body();
     
       assertEquals(products, productsResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void ZonesTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/zones.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    ImmutableMap<String, String> params =
+        ImmutableMap.<String, String>builder()
+            .put("area", "DE")
+            .put("type", "land")
+            .build();
+    
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Zones zones = gsonBuilder.create().fromJson(json.toString(), Zones.class);
+    ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
+    Call<Zones> callSync = service.getZones(params);
+    try {
+      Response<Zones> response = callSync.execute();
+      Zones zonesResponse = response.body();
+      assertEquals(zones, zonesResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }

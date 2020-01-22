@@ -1,0 +1,93 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "https://api.weather.gov/zones/forecast/DEZ001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "@id": "https://api.weather.gov/zones/forecast/DEZ001",
+        "@type": "wx:Zone",
+        "id": "DEZ001",
+        "type": "public",
+        "name": "New Castle",
+        "state": "DE",
+        "cwa": [
+          "PHI"
+        ],
+        "forecastOffices": [
+          "https://api.weather.gov/offices/PHI"
+        ],
+        "timeZone": [
+          "America/New_York"
+        ]
+      }
+    },
+    {
+      "id": "https://api.weather.gov/zones/forecast/DEZ002",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "@id": "https://api.weather.gov/zones/forecast/DEZ002",
+        "@type": "wx:Zone",
+        "id": "DEZ002",
+        "type": "public",
+        "name": "Kent",
+        "state": "DE",
+        "cwa": [
+          "PHI"
+        ],
+        "forecastOffices": [
+          "https://api.weather.gov/offices/PHI"
+        ],
+        "timeZone": [
+          "America/New_York"
+        ]
+      }
+    },
+    {
+      "id": "https://api.weather.gov/zones/forecast/DEZ003",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "@id": "https://api.weather.gov/zones/forecast/DEZ003",
+        "@type": "wx:Zone",
+        "id": "DEZ003",
+        "type": "public",
+        "name": "Inland Sussex",
+        "state": "DE",
+        "cwa": [
+          "PHI"
+        ],
+        "forecastOffices": [
+          "https://api.weather.gov/offices/PHI"
+        ],
+        "timeZone": [
+          "America/New_York"
+        ]
+      }
+    },
+    {
+      "id": "https://api.weather.gov/zones/forecast/DEZ004",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "@id": "https://api.weather.gov/zones/forecast/DEZ004",
+        "@type": "wx:Zone",
+        "id": "DEZ004",
+        "type": "public",
+        "name": "Delaware Beaches",
+        "state": "DE",
+        "cwa": [
+          "PHI"
+        ],
+        "forecastOffices": [
+          "https://api.weather.gov/offices/PHI"
+        ],
+        "timeZone": [
+          "America/New_York"
+        ]
+      }
+    }
+  ]
+}
