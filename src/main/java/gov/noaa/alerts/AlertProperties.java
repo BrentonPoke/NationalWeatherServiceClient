@@ -1,6 +1,8 @@
 
 package gov.noaa.alerts;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import gov.noaa.Geocode;
 import gov.noaa.Reference;
 import java.util.List;
@@ -37,5 +39,10 @@ public class AlertProperties {
     private String status;
     private String type;
     private String urgency;
-
+    public String toJson(boolean pretty){
+        if(pretty)
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        else
+            return new Gson().toJson(this);
+    }
 }

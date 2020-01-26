@@ -1,6 +1,8 @@
 
 package gov.noaa.alerts;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import gov.noaa.Parameters;
 import java.util.List;
@@ -20,5 +22,10 @@ public class AlertParameters extends Parameters {
     private List<String> HazardType;
     @SerializedName(value = "EASORG",alternate = "EAS-ORG")
     private List<String> EASORG;
-
+    public String toJson(boolean pretty){
+        if(pretty)
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        else
+            return new Gson().toJson(this);
+    }
 }

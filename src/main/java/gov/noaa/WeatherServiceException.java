@@ -1,6 +1,8 @@
 
 package gov.noaa;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,5 +21,10 @@ public class WeatherServiceException extends IOException {
     private Long status;
     private String title;
     private String type;
-
+    public String toJson(boolean pretty){
+            if(pretty)
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        else
+            return new Gson().toJson(this);
+    }
 }

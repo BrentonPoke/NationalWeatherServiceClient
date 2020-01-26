@@ -441,9 +441,8 @@ public class LibraryTest {
     Call<PointData> callSync = service.getPointData(new Point(position));
     try {
       Response<PointData> response = callSync.execute();
-      PointData pointsResponse = response.body();
 
-      assertEquals(pointData, pointsResponse);
+      assertEquals(pointData, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -611,8 +610,8 @@ public class LibraryTest {
     Call<Zones> callSync = service.getZones(params);
     try {
       Response<Zones> response = callSync.execute();
-      Zones zonesResponse = response.body();
-      assertEquals(zones, zonesResponse);
+      //Zones zonesResponse = response.body();
+      assertEquals(zones, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
