@@ -604,4 +604,32 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
+  
+  @Test
+  @SneakyThrows
+  public void ZonesByTypeTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/zonesbytype.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    ImmutableMap<String, String> params =
+        ImmutableMap.<String, String>builder()
+            .put("id","ARZ001")
+            .put("area", "AR")
+            .put("include_geometry","false")
+            .build();
+    
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Zones zones = gsonBuilder.create().fromJson(json.toString(), Zones.class);
+    System.out.println(zones.toJson(true));
+    ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
+    Call<Zones> callSync = service.getZonesByType("land",params);
+    try {
+      Response<Zones> response = callSync.execute();
+      assertEquals(zones, response.body());
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
 }
