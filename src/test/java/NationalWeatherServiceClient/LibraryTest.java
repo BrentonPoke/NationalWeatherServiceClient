@@ -155,8 +155,7 @@ public class LibraryTest {
     Call<AlertTypes> callSync = service.getAlertTypes();
     try {
       Response<AlertTypes> response = callSync.execute();
-      AlertTypes glossary1 = response.body();
-      assertEquals(alertTypes, glossary1);
+      assertEquals(alertTypes, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -186,8 +185,8 @@ public class LibraryTest {
     Call<Alerts> callSync = service.getAlerts(params);
     try {
       Response<Alerts> response = callSync.execute();
-      Alerts alertsResponse = response.body();
-      assertEquals(alerts, alertsResponse);
+
+      assertEquals(alerts, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -260,8 +259,8 @@ public class LibraryTest {
     Call<Alerts> callSync = service.getAlertsByMarineRegion("GL");
     try {
       Response<Alerts> response = callSync.execute();
-      Alerts alertsResponse = response.body();
-      assertEquals(alerts, alertsResponse);
+
+      assertEquals(alerts, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -282,8 +281,7 @@ public class LibraryTest {
     Call<Alerts> callSync = service.getAlertsByArea("CO");
     try {
       Response<Alerts> response = callSync.execute();
-      Alerts alertsResponse = response.body();
-      assertEquals(alerts, alertsResponse);
+      assertEquals(alerts, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -304,8 +302,7 @@ public class LibraryTest {
     Call<Alerts> callSync = service.getZoneByID("AMZ158");
     try {
       Response<Alerts> response = callSync.execute();
-      Alerts alertsResponse = response.body();
-      assertEquals(alerts, alertsResponse);
+      assertEquals(alerts, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -326,8 +323,8 @@ public class LibraryTest {
     Call<Forecast> callSync = service.getRawForecastData("TOP", 40, 60);
     try {
       Response<Forecast> response = callSync.execute();
-      Forecast rawResponse = response.body();
-      assertEquals(rawData, rawResponse);
+
+      assertEquals(rawData, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -348,9 +345,8 @@ public class LibraryTest {
     Call<TextForecast> callSync = service.getTextForecast("EAX", 50, 70, "si");
     try {
       Response<TextForecast> response = callSync.execute();
-      TextForecast textResponse = response.body();
 
-      assertEquals(forecast, textResponse);
+      assertEquals(forecast, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -394,9 +390,8 @@ public class LibraryTest {
     Call<Stations> callSync = service.getStationsByGridArea("TOP", 50, 70);
     try {
       Response<Stations> response = callSync.execute();
-      Stations stationsResponse = response.body();
 
-      assertEquals(forecast, stationsResponse);
+      assertEquals(forecast, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -417,9 +412,8 @@ public class LibraryTest {
     Call<Station> callSync = service.getStation("KMYZ");
     try {
       Response<Station> response = callSync.execute();
-      Station stationsResponse = response.body();
 
-      assertEquals(forecast, stationsResponse);
+      assertEquals(forecast, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -468,8 +462,8 @@ public class LibraryTest {
     Call<Products> callSync = service.getProducts(params);
     try {
       Response<Products> response = callSync.execute();
-      Products productsResponse = response.body();
-      assertEquals(products, productsResponse);
+
+      assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -490,9 +484,8 @@ public class LibraryTest {
     Call<ProductLocations> callSync = service.getProductLocations();
     try {
       Response<ProductLocations> response = callSync.execute();
-      ProductLocations productsResponse = response.body();
 
-      assertEquals(products, productsResponse);
+      assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -513,9 +506,8 @@ public class LibraryTest {
     Call<ProductTypes> callSync = service.getProductTypes();
     try {
       Response<ProductTypes> response = callSync.execute();
-      ProductTypes productsResponse = response.body();
 
-      assertEquals(products, productsResponse);
+      assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -536,9 +528,8 @@ public class LibraryTest {
     Call<Products> callSync = service.getProductsByID("ADA");
     try {
       Response<Products> response = callSync.execute();
-      Products productsResponse = response.body();
       
-      assertEquals(products, productsResponse);
+      assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -559,9 +550,8 @@ public class LibraryTest {
     Call<ProductLocations> callSync = service.getProductLocationsForType("ABV");
     try {
       Response<ProductLocations> response = callSync.execute();
-      ProductLocations productsResponse = response.body();
       
-      assertEquals(products, productsResponse);
+      assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -582,9 +572,8 @@ public class LibraryTest {
     Call<Products> callSync = service.getProductsByTypeAndLocation("ABV","APX");
     try {
       Response<Products> response = callSync.execute();
-      Products productsResponse = response.body();
     
-      assertEquals(products, productsResponse);
+      assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -610,7 +599,6 @@ public class LibraryTest {
     Call<Zones> callSync = service.getZones(params);
     try {
       Response<Zones> response = callSync.execute();
-      //Zones zonesResponse = response.body();
       assertEquals(zones, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
