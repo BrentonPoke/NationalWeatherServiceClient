@@ -347,6 +347,8 @@ public class LibraryTest {
     try {
       Response<TextForecast> response = callSync.execute();
       TextForecast textResponse = response.body();
+      
+      System.out.println(textResponse.toJson(true));
 
       assertEquals(forecast, textResponse);
     } catch (IOException e) {

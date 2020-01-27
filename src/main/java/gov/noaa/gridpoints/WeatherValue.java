@@ -16,7 +16,7 @@ public class WeatherValue {
     private List<WeatherData> value;
     
     @Data
-    class WeatherData {
+    static class WeatherData {
         private String attributes;
         private String coverage;
         private String intensity;

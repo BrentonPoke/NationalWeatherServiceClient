@@ -1,6 +1,6 @@
 package gov.noaa.stations;
 
-import com.github.filosganga.geogson.model.Geometry;
+import com.github.filosganga.geogson.model.AbstractGeometry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Station{
 
 	@SerializedName("geometry")
-	private static Geometry geometry;
+	private AbstractGeometry geometry;
 
 	@SerializedName("id")
 	private String id;
