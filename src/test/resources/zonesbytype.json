@@ -1285,7 +1285,7 @@
           ]
         ]
       },
-      "properties": {
+        "properties": {
         "@id": "https://api.weather.gov/zones/forecast/ARZ001",
         "@type": "wx:Zone",
         "id": "ARZ001",

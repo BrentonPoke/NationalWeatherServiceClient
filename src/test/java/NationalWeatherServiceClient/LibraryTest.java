@@ -6,16 +6,22 @@ package NationalWeatherServiceClient;
 import static org.junit.Assert.assertEquals;
 
 import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
+import com.github.filosganga.geogson.model.AbstractGeometry;
 import com.github.filosganga.geogson.model.Coordinates;
+import com.github.filosganga.geogson.model.Geometry;
+import com.github.filosganga.geogson.model.GeometryCollection;
+import com.github.filosganga.geogson.model.MultiPolygon;
 import com.github.filosganga.geogson.model.Point;
 import com.github.filosganga.geogson.model.positions.SinglePosition;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import gov.noaa.GeometryDeserializer;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
@@ -44,7 +50,6 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.SneakyThrows;
@@ -57,17 +62,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LibraryTest {
-  class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime> {
-    @Override
-    public LocalDateTime deserialize(
-        JsonElement json, Type typeOfT, JsonDeserializationContext context)
-        throws JsonParseException {
-      TimeZone tz = TimeZone.getTimeZone("UTC");
-      System.out.println(json.getAsString());
-      System.out.println(LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME));
-      return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME);
-    }
-  }
 
   static class TestWeatherServiceGenerator {
     private static final String BASE_URL =
@@ -468,7 +462,7 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ProductLocationsTest() throws FileNotFoundException {
@@ -476,10 +470,11 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     GsonBuilder gsonBuilder = new GsonBuilder();
-    ProductLocations products = gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
-    
+    ProductLocations products =
+        gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
+
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocations();
     try {
@@ -490,7 +485,7 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ProductTypesTest() throws FileNotFoundException {
@@ -498,10 +493,10 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     GsonBuilder gsonBuilder = new GsonBuilder();
     ProductTypes products = gsonBuilder.create().fromJson(json.toString(), ProductTypes.class);
-    
+
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductTypes> callSync = service.getProductTypes();
     try {
@@ -512,7 +507,7 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ProductTypeByIDTest() throws FileNotFoundException {
@@ -520,21 +515,21 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     GsonBuilder gsonBuilder = new GsonBuilder();
     Products products = gsonBuilder.create().fromJson(json.toString(), Products.class);
-    
+
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<Products> callSync = service.getProductsByID("ADA");
     try {
       Response<Products> response = callSync.execute();
-      
+
       assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ProductLocationsByTypeTest() throws FileNotFoundException {
@@ -542,43 +537,45 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     GsonBuilder gsonBuilder = new GsonBuilder();
-    ProductLocations products = gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
-    
+    ProductLocations products =
+        gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
+
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocationsForType("ABV");
     try {
       Response<ProductLocations> response = callSync.execute();
-      
+
       assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ProductsByTypeAndLocationTest() throws FileNotFoundException {
-    FileInputStream input = new FileInputStream("src/test/resources/productsbytypeandlocation.json");
+    FileInputStream input =
+        new FileInputStream("src/test/resources/productsbytypeandlocation.json");
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     GsonBuilder gsonBuilder = new GsonBuilder();
     Products products = gsonBuilder.create().fromJson(json.toString(), Products.class);
-  
+
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
-    Call<Products> callSync = service.getProductsByTypeAndLocation("ABV","APX");
+    Call<Products> callSync = service.getProductsByTypeAndLocation("ABV", "APX");
     try {
       Response<Products> response = callSync.execute();
-    
+
       assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ZonesTest() throws FileNotFoundException {
@@ -586,13 +583,10 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     ImmutableMap<String, String> params =
-        ImmutableMap.<String, String>builder()
-            .put("area", "DE")
-            .put("type", "land")
-            .build();
-    
+        ImmutableMap.<String, String>builder().put("area", "DE").put("type", "land").build();
+
     GsonBuilder gsonBuilder = new GsonBuilder();
     Zones zones = gsonBuilder.create().fromJson(json.toString(), Zones.class);
     ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
@@ -604,7 +598,7 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ZonesByTypeTest() throws FileNotFoundException {
@@ -612,22 +606,29 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     ImmutableMap<String, String> params =
         ImmutableMap.<String, String>builder()
-            .put("id","ARZ001")
+            .put("id", "ARZ001")
             .put("area", "AR")
-            .put("include_geometry","false")
+            .put("include_geometry", "false")
             .build();
-    
-    GsonBuilder gsonBuilder = new GsonBuilder();
+
+    GsonBuilder gsonBuilder =
+        new GsonBuilder()
+            .registerTypeAdapterFactory(new GeometryAdapterFactory())
+            .serializeSpecialFloatingPointValues();
     Zones zones = gsonBuilder.create().fromJson(json.toString(), Zones.class);
-    System.out.println(zones.toJson(true));
+    System.out.println(zones.toJson(false));
     ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
-    Call<Zones> callSync = service.getZonesByType("land",params);
+    Call<Zones> callSync = service.getZonesByType("land", params);
     try {
       Response<Zones> response = callSync.execute();
-      assertEquals(zones, response.body());
+      Zones zoneResponse = response.body();
+      
+      System.out.println(response.body().toJson(false));
+      
+      assertEquals(zones, zoneResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }

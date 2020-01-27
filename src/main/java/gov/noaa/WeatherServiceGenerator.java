@@ -1,5 +1,8 @@
 package gov.noaa;
 
+import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -8,10 +11,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherServiceGenerator {
   private static final String BASE_URL = "https://api.weather.gov";
+  
+  static Gson gson =
+      new GsonBuilder()
+          .registerTypeAdapterFactory(new GeometryAdapterFactory())
+          .serializeSpecialFloatingPointValues().create();
+  
   private static Retrofit.Builder builder
       = new Retrofit.Builder()
       .baseUrl(BASE_URL)
-      .addConverterFactory(GsonConverterFactory.create());
+      .addConverterFactory(GsonConverterFactory.create(gson));
 
   private static Retrofit retrofit = builder.build();
 
