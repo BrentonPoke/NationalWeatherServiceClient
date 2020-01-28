@@ -6,15 +6,19 @@ package NationalWeatherServiceClient;
 import static org.junit.Assert.assertEquals;
 
 import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
+import com.github.filosganga.geogson.model.AbstractGeometry;
 import com.github.filosganga.geogson.model.Coordinates;
 import com.github.filosganga.geogson.model.Geometry;
 import com.github.filosganga.geogson.model.GeometryCollection;
 import com.github.filosganga.geogson.model.Point;
 import com.github.filosganga.geogson.model.positions.SinglePosition;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
+import gov.noaa.NullGeometryDeserializer;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
@@ -33,6 +37,7 @@ import gov.noaa.products.ProductsService;
 import gov.noaa.stations.Station;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
+import gov.noaa.zones.ZoneForecast;
 import gov.noaa.zones.ZoneService;
 import gov.noaa.zones.Zones;
 import java.io.FileInputStream;
@@ -637,6 +642,35 @@ public class LibraryTest {
     try {
       Response<Zones> response = callSync.execute();
       Zones zoneResponse = response.body();
+      
+      System.out.println(response.body().toJson(false));
+      
+      assertEquals(zones, zoneResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void ZoneForecastByIDTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/zoneforecastbyid.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    GsonBuilder gsonBuilder =
+        new GsonBuilder()
+            .registerTypeAdapterFactory(new GeometryAdapterFactory())
+            .serializeSpecialFloatingPointValues();
+    
+    ZoneForecast zones = gsonBuilder.create().fromJson(json.toString(), ZoneForecast.class);
+    System.out.println(zones.toJson(true));
+    ZoneService service = TestWeatherServiceGenerator.createService(ZoneService.class);
+    Call<ZoneForecast> callSync = service.getZoneForecastByID("land", "MIZ001");
+    try {
+      Response<ZoneForecast> response = callSync.execute();
+      ZoneForecast zoneResponse = response.body();
       
       System.out.println(response.body().toJson(false));
       
