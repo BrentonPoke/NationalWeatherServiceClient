@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "wx": "https://api.weather.gov/ontology#",
+    "geo": "http://www.opengis.net/ont/geosparql#",
+    "unit": "http://codes.wmo.int/common/unit/",
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "geometry": {},
+  "updated": "2020-01-28T11:46:00-05:00",
+  "periods": [
+    {
+      "number": 1,
+      "name": "Rest Of Today",
+      "detailedForecast": "Cloudy with a 40 percent chance of snow showers.\nHighs 23 to 28. Northeast winds 5 to 10 mph becoming north in the\nafternoon. \n"
+    },
+    {
+      "number": 2,
+      "name": "Tonight",
+      "detailedForecast": "Cloudy with isolated snow showers. Lows 16 to 21.\nNortheast winds 5 to 10 mph. Chance of snow 20 percent. \n"
+    },
+    {
+      "number": 3,
+      "name": "Wednesday",
+      "detailedForecast": "Cloudy. Highs around 26. Light winds. \n"
+    },
+    {
+      "number": 4,
+      "name": "Wednesday Night",
+      "detailedForecast": "Cloudy. Lows 17 to 22. Light winds. \n"
+    },
+    {
+      "number": 5,
+      "name": "Thursday",
+      "detailedForecast": "Cloudy. Highs 25 to 30. Light winds. \n"
+    },
+    {
+      "number": 6,
+      "name": "Thursday Night and Friday",
+      "detailedForecast": "Cloudy. Lows 19 to 24. Highs around\n30. \n"
+    },
+    {
+      "number": 7,
+      "name": "Friday Night and Saturday",
+      "detailedForecast": "Cloudy with a 40 percent chance of\nsnow showers. Lows 23 to 28. Highs around 32. \n"
+    },
+    {
+      "number": 8,
+      "name": "Saturday Night",
+      "detailedForecast": "Mostly cloudy with a 30 percent chance of snow\nshowers. Lows 24 to 29. \n"
+    },
+    {
+      "number": 9,
+      "name": "Sunday",
+      "detailedForecast": "Mostly cloudy. Highs around 33. \n"
+    },
+    {
+      "number": 10,
+      "name": "Sunday Night",
+      "detailedForecast": "A chance of snow showers overnight. Mostly\ncloudy. Lows 21 to 26 inland to around 27 at the shore. Chance of\nsnow 30 percent. \n"
+    },
+    {
+      "number": 11,
+      "name": "Monday",
+      "detailedForecast": "A chance of snow in the morning, then a chance of snow,\npossibly mixed with rain in the afternoon. Cloudy. Highs 32 to\n37. Chance of precipitation 40 percent."
+    }
+  ]
+}
