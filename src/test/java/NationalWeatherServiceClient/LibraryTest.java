@@ -7,10 +7,14 @@ import static org.junit.Assert.assertEquals;
 
 import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
 import com.github.filosganga.geogson.model.Coordinates;
+import com.github.filosganga.geogson.model.Geometry;
+import com.github.filosganga.geogson.model.GeometryCollection;
 import com.github.filosganga.geogson.model.Point;
 import com.github.filosganga.geogson.model.positions.SinglePosition;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
@@ -34,6 +38,9 @@ import gov.noaa.zones.Zones;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,12 +54,30 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LibraryTest {
+  
+  private static class GeometryCollectionInstanceCreator implements InstanceCreator<GeometryCollection>{
+    private List<Geometry<?>> geometry;
+    
+    public GeometryCollectionInstanceCreator(){
+      this.geometry = new ArrayList<>();
+    }
+    
+    @Override
+    public GeometryCollection createInstance(Type type) {
+      
+      return GeometryCollection.of(this.geometry);
+    }
+  }
 
   static class TestWeatherServiceGenerator {
     private static final String BASE_URL =
         "https://37e6db5e-3ccd-4bbc-a1e4-835b4679eae4.mock.pstmn.io";
+    static Gson gson =
+        new GsonBuilder()
+            .registerTypeAdapterFactory(new GeometryAdapterFactory())
+            .serializeSpecialFloatingPointValues().create();
     private static Retrofit.Builder builder =
-        new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
+        new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson));
 
     private static Retrofit retrofit = builder.build();
 
@@ -340,16 +365,16 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
     GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
+        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory())
+            .enableComplexMapKeySerialization()
+            .serializeSpecialFloatingPointValues();
     TextForecast forecast = gsonBuilder.create().fromJson(json.toString(), TextForecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<TextForecast> callSync = service.getTextForecast("TOP", 50, 70, "us");
+    
     try {
       Response<TextForecast> response = callSync.execute();
       TextForecast textResponse = response.body();
-      
-      System.out.println(textResponse.toJson(true));
-
       assertEquals(forecast, textResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());

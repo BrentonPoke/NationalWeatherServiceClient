@@ -1,13 +1,4 @@
 {
-  "@context": [
-    "https://raw.githubusercontent.com/geojson/geojson-ld/master/contexts/geojson-base.jsonld",
-    {
-      "wx": "https://api.weather.gov/ontology#",
-      "geo": "http://www.opengis.net/ont/geosparql#",
-      "unit": "http://codes.wmo.int/common/unit/",
-      "@vocab": "https://api.weather.gov/ontology#"
-    }
-  ],
   "type": "Feature",
   "geometry": {
     "type": "GeometryCollection",

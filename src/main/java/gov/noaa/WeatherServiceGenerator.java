@@ -1,13 +1,14 @@
 package gov.noaa;
 
 import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
-import com.github.filosganga.geogson.model.AbstractGeometry;
+import com.github.filosganga.geogson.model.Geometry;
 import com.github.filosganga.geogson.model.GeometryCollection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -51,17 +52,17 @@ public class WeatherServiceGenerator {
     return retrofit.create(serviceClass);
   }
   
-  private class GeometryCollectionInstanceCreator implements InstanceCreator<GeometryCollection>{
-  private ArrayList<AbstractGeometry> geometry;
+  public static class GeometryCollectionInstanceCreator implements InstanceCreator<GeometryCollection>{
+  private List<Geometry<?>> geometry;
   
-  public GeometryCollectionInstanceCreator(ArrayList<AbstractGeometry> geometry){
-    this.geometry =geometry;
+  public GeometryCollectionInstanceCreator(){
+    this.geometry = new ArrayList<>();
   }
   
     @Override
     public GeometryCollection createInstance(Type type) {
       
-      return null;
+      return GeometryCollection.of(this.geometry);
     }
   }
 

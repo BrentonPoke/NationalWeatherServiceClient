@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class TextForecast{
 
 	@SerializedName("geometry")
-	private static GeometryCollection geometry;
+	private GeometryCollection geometries;
 
 	@SerializedName("type")
 	private String type;
@@ -23,7 +23,7 @@ public class TextForecast{
 	private Properties properties;
 	public String toJson(boolean pretty){
 		if(pretty)
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        return new GsonBuilder().serializeSpecialFloatingPointValues().setPrettyPrinting().create().toJson(this);
         else
             return new Gson().toJson(this);
 	}
