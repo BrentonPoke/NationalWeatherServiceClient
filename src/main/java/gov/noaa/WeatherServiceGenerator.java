@@ -1,35 +1,21 @@
 package gov.noaa;
 
-import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
-import com.github.filosganga.geogson.model.AbstractGeometry;
-import com.github.filosganga.geogson.model.Geometry;
-import com.github.filosganga.geogson.model.GeometryCollection;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
 public class WeatherServiceGenerator {
   private static final String BASE_URL = "https://api.weather.gov";
   
-  static Gson gson =
-      new GsonBuilder()
-          .registerTypeAdapterFactory(new GeometryAdapterFactory())
-          .serializeSpecialFloatingPointValues().create();
+  static ObjectMapper mapper = new ObjectMapper();
   
   private static Retrofit.Builder builder
       = new Retrofit.Builder()
       .baseUrl(BASE_URL)
-      .addConverterFactory(GsonConverterFactory.create(gson));
+      .addConverterFactory(JacksonConverterFactory.create(mapper));
 
   private static Retrofit retrofit = builder.build();
 
@@ -54,7 +40,5 @@ public class WeatherServiceGenerator {
     }
     return retrofit.create(serviceClass);
   }
-  
-  
 
 }

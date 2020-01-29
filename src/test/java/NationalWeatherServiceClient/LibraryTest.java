@@ -5,16 +5,8 @@ package NationalWeatherServiceClient;
 
 import static org.junit.Assert.assertEquals;
 
-import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
-import com.github.filosganga.geogson.model.Coordinates;
-import com.github.filosganga.geogson.model.Geometry;
-import com.github.filosganga.geogson.model.GeometryCollection;
-import com.github.filosganga.geogson.model.Point;
-import com.github.filosganga.geogson.model.positions.SinglePosition;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
@@ -39,46 +31,30 @@ import gov.noaa.zones.Zones;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import org.geojson.LngLatAlt;
+import org.geojson.Point;
 import org.junit.Test;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class LibraryTest {
-  
-  private static class GeometryCollectionInstanceCreator implements InstanceCreator<GeometryCollection>{
-    private List<Geometry<?>> geometry;
-    
-    public GeometryCollectionInstanceCreator(){
-      this.geometry = new ArrayList<>();
-    }
-    
-    @Override
-    public GeometryCollection createInstance(Type type) {
-      
-      return GeometryCollection.of(this.geometry);
-    }
-  }
 
   static class TestWeatherServiceGenerator {
     private static final String BASE_URL =
         "https://37e6db5e-3ccd-4bbc-a1e4-835b4679eae4.mock.pstmn.io";
-    static Gson gson =
-        new GsonBuilder()
-            .registerTypeAdapterFactory(new GeometryAdapterFactory())
-            .serializeSpecialFloatingPointValues().create();
+    static ObjectMapper mapper = new ObjectMapper();
     private static Retrofit.Builder builder =
-        new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson));
+        new Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(JacksonConverterFactory.create(mapper));
 
     private static Retrofit retrofit = builder.build();
 
@@ -112,8 +88,8 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Stations stations = gsonBuilder.create().fromJson(json.toString(), Stations.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Stations stations = mapper.readValue(json.toString(), Stations.class);
     StationService service = WeatherServiceGenerator.createService(StationService.class);
     Call<Stations> callSync = service.getStations(ImmutableMap.of("state", "AZ", "limit", "2"));
     try {
@@ -133,8 +109,8 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Glossary glossary = gsonBuilder.create().fromJson(json.toString(), Glossary.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Glossary glossary = mapper.readValue(json.toString(), Glossary.class);
     GlossaryService service = WeatherServiceGenerator.createService(GlossaryService.class);
     Call<Glossary> callSync = service.getGlossaryItems();
     try {
@@ -154,8 +130,8 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    AlertTypes alertTypes = gsonBuilder.create().fromJson(json.toString(), AlertTypes.class);
+    ObjectMapper mapper = new ObjectMapper();
+    AlertTypes alertTypes = mapper.readValue(json.toString(), AlertTypes.class);
     AlertService service = WeatherServiceGenerator.createService(AlertService.class);
     Call<AlertTypes> callSync = service.getAlertTypes();
     try {
@@ -184,8 +160,8 @@ public class LibraryTest {
             .put("limit", "3")
             .build();
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Alerts alerts = gsonBuilder.create().fromJson(json.toString(), Alerts.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getAlerts(params);
     try {
@@ -214,8 +190,8 @@ public class LibraryTest {
             .put("limit", "3")
             .build();
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Alerts alerts = gsonBuilder.create().fromJson(json.toString(), Alerts.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getAlerts(params);
     try {
@@ -236,8 +212,8 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
     System.out.println(json);
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Alerts alerts = gsonBuilder.create().fromJson(json.toString(), Alerts.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getAlertByID("NWS-IDP-PROD-3988177-3384711");
     try {
@@ -258,8 +234,8 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
     System.out.println(json);
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Alerts alerts = gsonBuilder.create().fromJson(json.toString(), Alerts.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getAlertsByMarineRegion("GL");
     try {
@@ -280,8 +256,8 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
     System.out.println(json);
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Alerts alerts = gsonBuilder.create().fromJson(json.toString(), Alerts.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getAlertsByArea("CO");
     try {
@@ -301,8 +277,8 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
     System.out.println(json);
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Alerts alerts = gsonBuilder.create().fromJson(json.toString(), Alerts.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getZoneByID("AMZ158");
     try {
@@ -320,15 +296,14 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
-    Forecast rawData = gsonBuilder.create().fromJson(json.toString(), Forecast.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    Forecast rawData = mapper.readValue(json.toString(), Forecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<Forecast> callSync = service.getRawForecastData("TOP", 40, 60);
     try {
       Response<Forecast> response = callSync.execute();
-
+      System.out.println(response.body().toJson(true));
       assertEquals(rawData, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
@@ -342,15 +317,14 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
-    TextForecast forecast = gsonBuilder.create().fromJson(json.toString(), TextForecast.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    TextForecast forecast = mapper.readValue(json.toString(), TextForecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<TextForecast> callSync = service.getTextForecast("EAX", 50, 70, "si");
     try {
       Response<TextForecast> response = callSync.execute();
-
+      System.out.println(response.body().toJson(true));
       assertEquals(forecast, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
@@ -364,18 +338,16 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory())
-            .enableComplexMapKeySerialization()
-            .serializeSpecialFloatingPointValues();
-    TextForecast forecast = gsonBuilder.create().fromJson(json.toString(), TextForecast.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    TextForecast forecast = mapper.readValue(json.toString(), TextForecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<TextForecast> callSync = service.getTextForecast("TOP", 50, 70, "us");
-    
+
     try {
       Response<TextForecast> response = callSync.execute();
       TextForecast textResponse = response.body();
+      System.out.println(forecast.toJson(true));
       assertEquals(forecast, textResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
@@ -389,10 +361,9 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
-    Stations forecast = gsonBuilder.create().fromJson(json.toString(), Stations.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    Stations forecast = mapper.readValue(json.toString(), Stations.class);
     GridpointsService service = WeatherServiceGenerator.createService(GridpointsService.class);
     Call<Stations> callSync = service.getStationsByGridArea("TOP", 50, 70);
     try {
@@ -411,10 +382,9 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
-    Station forecast = gsonBuilder.create().fromJson(json.toString(), Station.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    Station forecast = mapper.readValue(json.toString(), Station.class);
     StationService service = WeatherServiceGenerator.createService(StationService.class);
     Call<Station> callSync = service.getStation("KMYZ");
     try {
@@ -433,13 +403,16 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder().registerTypeAdapterFactory(new GeometryAdapterFactory());
-    PointData pointData = gsonBuilder.create().fromJson(json.toString(), PointData.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    PointData pointData = mapper.readValue(json.toString(), PointData.class);
     PointService service = WeatherServiceGenerator.createService(PointService.class);
-    SinglePosition position = new SinglePosition(Coordinates.of(-96.6306, 39.8553));
-    Call<PointData> callSync = service.getPointData(new Point(position));
+    LngLatAlt coordinates = new LngLatAlt();
+    coordinates.setLatitude(-96.6306);
+    coordinates.setLongitude(39.8553);
+    Point point = new Point();
+    point.setCoordinates(coordinates);
+    Call<PointData> callSync = service.getPointData(point);
     try {
       Response<PointData> response = callSync.execute();
 
@@ -463,14 +436,16 @@ public class LibraryTest {
             .put("location", "APX")
             .build();
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Products products = gsonBuilder.create().fromJson(json.toString(), Products.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Products products = mapper.readValue(json.toString(),Products.class);
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<Products> callSync = service.getProducts(params);
     try {
       Response<Products> response = callSync.execute();
+      Products products1 = response.body();
+      System.out.println(products1.toJson());
 
-      assertEquals(products, response.body());
+      assertEquals(products.toJson(), products1.toJson());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -484,9 +459,9 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
+    ObjectMapper mapper = new ObjectMapper();
     ProductLocations products =
-        gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
+        mapper.readValue(json.toString(), ProductLocations.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocations();
@@ -507,8 +482,8 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    ProductTypes products = gsonBuilder.create().fromJson(json.toString(), ProductTypes.class);
+    ObjectMapper mapper = new ObjectMapper();
+    ProductTypes products = mapper.readValue(json.toString(), ProductTypes.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductTypes> callSync = service.getProductTypes();
@@ -529,8 +504,8 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Products products = gsonBuilder.create().fromJson(json.toString(), Products.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Products products = mapper.readValue(json.toString(), Products.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<Products> callSync = service.getProductsByID("ADA");
@@ -551,9 +526,9 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
+    ObjectMapper mapper = new ObjectMapper();
     ProductLocations products =
-        gsonBuilder.create().fromJson(json.toString(), ProductLocations.class);
+        mapper.readValue(json.toString(), ProductLocations.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocationsForType("ABV");
@@ -575,8 +550,8 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Products products = gsonBuilder.create().fromJson(json.toString(), Products.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Products products = mapper.readValue(json.toString(), Products.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<Products> callSync = service.getProductsByTypeAndLocation("ABV", "APX");
@@ -600,8 +575,8 @@ public class LibraryTest {
     ImmutableMap<String, String> params =
         ImmutableMap.<String, String>builder().put("area", "DE").put("type", "land").build();
 
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Zones zones = gsonBuilder.create().fromJson(json.toString(), Zones.class);
+    ObjectMapper mapper = new ObjectMapper();
+    Zones zones = mapper.readValue(json.toString(), Zones.class);
     ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
     Call<Zones> callSync = service.getZones(params);
     try {
@@ -626,27 +601,24 @@ public class LibraryTest {
             .put("area", "AR")
             .put("include_geometry", "false")
             .build();
-
-    GsonBuilder gsonBuilder =
-        new GsonBuilder()
-            .registerTypeAdapterFactory(new GeometryAdapterFactory())
-            .serializeSpecialFloatingPointValues();
-    Zones zones = gsonBuilder.create().fromJson(json.toString(), Zones.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+    Zones zones = mapper.readValue(json.toString(), Zones.class);
     System.out.println(zones.toJson(false));
     ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
     Call<Zones> callSync = service.getZonesByType("land", params);
     try {
       Response<Zones> response = callSync.execute();
       Zones zoneResponse = response.body();
-      
+
       System.out.println(response.body().toJson(false));
-      
+
       assertEquals(zones, zoneResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ZoneForecastByIDTest() throws FileNotFoundException {
@@ -654,22 +626,19 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
-    GsonBuilder gsonBuilder =
-        new GsonBuilder()
-            .registerTypeAdapterFactory(new GeometryAdapterFactory())
-            .serializeSpecialFloatingPointValues();
-    
-    ZoneForecast zones = gsonBuilder.create().fromJson(json.toString(), ZoneForecast.class);
+  
+    ObjectMapper mapper = new ObjectMapper();
+
+    ZoneForecast zones = mapper.readValue(json.toString(), ZoneForecast.class);
     System.out.println(zones.toJson(true));
     ZoneService service = TestWeatherServiceGenerator.createService(ZoneService.class);
     Call<ZoneForecast> callSync = service.getZoneForecastByID("land", "MIZ001");
     try {
       Response<ZoneForecast> response = callSync.execute();
       ZoneForecast zoneResponse = response.body();
-      
+
       System.out.println(response.body().toJson(false));
-      
+
       assertEquals(zones, zoneResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());

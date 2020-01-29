@@ -1,18 +1,18 @@
 package gov.noaa.points;
 
-import com.github.filosganga.geogson.model.Geometry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.geojson.Geometry;
 
 @Data
 @NoArgsConstructor
 public class PointData{
 
 	@SerializedName("geometry")
-	private static Geometry geometry;
+	private Geometry geometry;
 
 	@SerializedName("id")
 	private String id;

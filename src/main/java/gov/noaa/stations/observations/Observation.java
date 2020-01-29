@@ -1,16 +1,16 @@
 package gov.noaa.stations.observations;
 
-import com.github.filosganga.geogson.model.Geometry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.geojson.Geometry;
 
 @NoArgsConstructor
 @Data
 public class Observation{
-	private static Geometry geometry;
+	private Geometry geometry;
 	private String id;
 	private String type;
 	private List<String> context;

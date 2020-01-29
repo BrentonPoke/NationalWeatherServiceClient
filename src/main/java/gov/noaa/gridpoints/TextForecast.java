@@ -1,30 +1,34 @@
 package gov.noaa.gridpoints;
 
-import com.github.filosganga.geogson.model.GeometryCollection;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.geojson.GeometryCollection;
 
 @Data
 @NoArgsConstructor
-public class TextForecast{
+@AllArgsConstructor
+public class TextForecast {
 
-	@SerializedName("geometry")
-	private GeometryCollection geometries;
+  private GeometryCollection geometry;
 
-	@SerializedName("type")
-	private String type;
-	private List<String> context;
+  private String type;
 
-	@SerializedName("properties")
-	private Properties properties;
-	public String toJson(boolean pretty){
-		if(pretty)
-        return new GsonBuilder().serializeSpecialFloatingPointValues().setPrettyPrinting().create().toJson(this);
-        else
-            return new Gson().toJson(this);
-	}
+  private List<String> context;
+
+  private Properties properties;
+
+  public String toJson(boolean pretty) {
+  	GsonBuilder gsonBuilder = new GsonBuilder();
+    if (pretty)
+			gsonBuilder
+					.setPrettyPrinting();
+      return gsonBuilder
+          .serializeSpecialFloatingPointValues()
+          //.registerTypeAdapter(GeometryCollection.class, new InterfaceAdapter())
+          .create()
+          .toJson(this);
+  }
 }

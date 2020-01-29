@@ -1,18 +1,18 @@
 
 package gov.noaa;
 
-import com.github.filosganga.geogson.model.Geometry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.geojson.Geometry;
 
 @Data
 @SuppressWarnings("unused")
 @NoArgsConstructor
 public class Feature {
 
-    protected static Geometry geometry;
+    protected Geometry geometry;
     protected String id;
     protected String type;
     public String toJson(boolean pretty){

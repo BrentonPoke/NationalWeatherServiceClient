@@ -1,7 +1,6 @@
 
 package gov.noaa.zones;
 
-import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
 import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.Data;
@@ -19,7 +18,7 @@ public String toJson(boolean pretty){
     if(pretty)
         builder.setPrettyPrinting();
     
-            return builder.registerTypeAdapterFactory(new GeometryAdapterFactory())
+            return builder
             .serializeSpecialFloatingPointValues().create().toJson(this);
 }
 }

@@ -1,23 +1,26 @@
 
 package gov.noaa.products;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("unused")
 public class Products {
     
-    @SerializedName("@graph")
+    @JsonProperty("@graph")
     private List<Product> graph;
     
     @Data
-    static class Product {
+    @JsonIgnoreProperties(value = "@id")
+     static class Product {
         
         private String id;
         private String issuanceTime;
@@ -25,12 +28,16 @@ public class Products {
         private String productCode;
         private String productName;
         private String wmoCollectiveId;
-        
+    
+        public Product() {
+        }
     }
-    public String toJson(boolean pretty){
-        if(pretty)
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
-        else
-            return new Gson().toJson(this);
+    public String toJson(){
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

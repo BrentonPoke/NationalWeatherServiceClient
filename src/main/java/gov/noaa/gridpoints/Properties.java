@@ -1,8 +1,8 @@
 package gov.noaa.gridpoints;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import gov.noaa.stations.Elevation;
 import java.util.List;
 import lombok.Data;
@@ -12,34 +12,26 @@ import lombok.NoArgsConstructor;
 @Data
 public class Properties{
 
-	@SerializedName("elevation")
 	private Elevation elevation;
 
-	@SerializedName("validTimes")
 	private String validTimes;
 
-	@SerializedName("gridX")
 	private String gridX;
 
-	@SerializedName("gridY")
 	private String gridY;
 
-	@SerializedName("@type")
+	@JsonProperty("@type")
 	private String type;
 
-	@SerializedName("forecastOffice")
 	private String forecastOffice;
 
-	@SerializedName("updateTime")
-	private String updateTime;
+	private String updateTime, updated, units, forecastGenerator, generatedAt;
 
-	@SerializedName("@id")
+	@JsonProperty("@id")
 	private String id;
 
-	@SerializedName("gridId")
 	private String gridId;
 	
-	@SerializedName(("periods"))
 	private List<Period> periods;
 
 	private Measurement apparentTemperature;
