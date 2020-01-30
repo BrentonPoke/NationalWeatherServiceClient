@@ -1,23 +1,21 @@
 package gov.noaa.points;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geojson.Geometry;
+import org.geojson.Point;
 
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RelativeLocation{
 
-	@SerializedName("geometry")
-	private Geometry geometry;
+	private Point geometry;
 
-	@SerializedName("type")
 	private String type;
 
-	@SerializedName("properties")
 	private PointProperties properties;
 	public String toJson(boolean pretty){
 		if(pretty)

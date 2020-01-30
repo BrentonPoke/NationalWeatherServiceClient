@@ -18,7 +18,7 @@ public class Measurement {
 	private String sourceUnit;
 	
 	@Data
-	class Value{
+	static class Value{
 		
 		private String validTime;
 		

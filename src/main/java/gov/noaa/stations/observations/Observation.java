@@ -1,5 +1,6 @@
 package gov.noaa.stations.observations;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.geojson.Geometry;
 
 @NoArgsConstructor
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Observation{
 	private Geometry geometry;
 	private String id;

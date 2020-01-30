@@ -6,14 +6,16 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geojson.Geometry;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @Data
 @SuppressWarnings("unused")
 public class ZoneForecast {
-    private Geometry geometry;
+    
+    //TODO: Going to have to figure out how to deserialize empty objects the API returns.
+    //@JsonDeserialize(using = EmptyToNullObject.class)
+    //private FeatureCollection geometry;
     private List<Period> periods;
     private String updated;
     public String toJson(boolean pretty){

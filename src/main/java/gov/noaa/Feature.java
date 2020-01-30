@@ -1,18 +1,20 @@
 
 package gov.noaa;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geojson.Geometry;
+import org.geojson.Point;
 
 @Data
 @SuppressWarnings("unused")
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Feature {
 
-    protected Geometry geometry;
+    protected Point geometry;
     protected String id;
     protected String type;
     public String toJson(boolean pretty){

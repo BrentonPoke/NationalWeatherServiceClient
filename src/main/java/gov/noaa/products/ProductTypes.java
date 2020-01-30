@@ -1,6 +1,7 @@
 
 package gov.noaa.products;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("unused")
 public class ProductTypes {
     @SerializedName("@graph")

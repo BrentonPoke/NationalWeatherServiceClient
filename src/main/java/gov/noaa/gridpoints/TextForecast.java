@@ -1,5 +1,6 @@
 package gov.noaa.gridpoints;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.geojson.GeometryCollection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TextForecast {
 
   private GeometryCollection geometry;

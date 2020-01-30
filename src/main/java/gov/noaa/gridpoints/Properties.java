@@ -79,6 +79,7 @@ public class Properties{
 	private Measurement transportWindDirection;
 	private Measurement transportWindSpeed;
 	private Measurement twentyFootWindDirection;
+	private Measurement twentyFootWindSpeed;
 	private Measurement visibility;
 	private Measurement waveDirection;
 	private Measurement waveHeight;

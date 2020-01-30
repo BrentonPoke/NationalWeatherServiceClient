@@ -1,23 +1,22 @@
 package gov.noaa.stations;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geojson.Geometry;
+import org.geojson.Point;
 
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Station{
 
-	@SerializedName("geometry")
-	private Geometry geometry;
+	private Point geometry;
 
-	@SerializedName("id")
 	private String id;
 
-	@SerializedName("type")
 	private String type;
 
 	@SerializedName("properties")

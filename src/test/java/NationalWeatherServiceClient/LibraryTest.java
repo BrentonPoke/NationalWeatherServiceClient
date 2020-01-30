@@ -5,6 +5,7 @@ package NationalWeatherServiceClient;
 
 import static org.junit.Assert.assertEquals;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import gov.noaa.WeatherServiceGenerator;
@@ -297,7 +298,7 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
   
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY,true);
     Forecast rawData = mapper.readValue(json.toString(), Forecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<Forecast> callSync = service.getRawForecastData("TOP", 40, 60);
@@ -408,8 +409,8 @@ public class LibraryTest {
     PointData pointData = mapper.readValue(json.toString(), PointData.class);
     PointService service = WeatherServiceGenerator.createService(PointService.class);
     LngLatAlt coordinates = new LngLatAlt();
-    coordinates.setLatitude(-96.6306);
-    coordinates.setLongitude(39.8553);
+    coordinates.setLongitude(-96.6306);
+    coordinates.setLatitude(39.8553);
     Point point = new Point();
     point.setCoordinates(coordinates);
     Call<PointData> callSync = service.getPointData(point);
