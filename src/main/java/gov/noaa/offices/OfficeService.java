@@ -8,6 +8,7 @@ public interface OfficeService {
   @GET("/offices/{officeid}")
   Call<Office> getOfficeByID(@Path("officeid") String officeID);
   @GET("/offices/{officeid}/headlines")
-  Call<OfficeHeadline> getOfficeHeadline(@Path("officeid")String officeID);
-  
+  Call<OfficeHeadlines> getOfficeHeadlines(@Path("officeid")String officeID);
+  @GET("/offices/{officeid}/headlines/{headlineid}")
+  Call<Headline> getOfficeHeadlineBYID(@Path("officeid")String officeID, @Path("headlineid") String headlineID);
 }

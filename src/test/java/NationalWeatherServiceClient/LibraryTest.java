@@ -17,7 +17,9 @@ import gov.noaa.glossary.GlossaryService;
 import gov.noaa.gridpoints.Forecast;
 import gov.noaa.gridpoints.GridpointsService;
 import gov.noaa.gridpoints.TextForecast;
+import gov.noaa.offices.Headline;
 import gov.noaa.offices.Office;
+import gov.noaa.offices.OfficeHeadlines;
 import gov.noaa.offices.OfficeService;
 import gov.noaa.points.PointData;
 import gov.noaa.points.PointService;
@@ -669,6 +671,58 @@ public class LibraryTest {
       System.out.println(officeResponse.toJson(false));
       
       assertEquals(office, officeResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void HeadlineByIDTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/headlineByID.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    ObjectMapper mapper = new ObjectMapper();
+    
+    Headline office = mapper.readValue(json.toString(), Headline.class);
+    
+    OfficeService service = WeatherServiceGenerator.createService(OfficeService.class);
+    Call<Headline> callSync = service.getOfficeHeadlineBYID("DTX", "061ecd7254f56401fc76554022c06ff5");
+    try {
+      Response<Headline> response = callSync.execute();
+      Headline headlineResponse = response.body();
+      
+      System.out.println(headlineResponse.toJson(false));
+      
+      assertEquals(office, headlineResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void HeadlineTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/officeHeadline.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    ObjectMapper mapper = new ObjectMapper();
+    
+    OfficeHeadlines office = mapper.readValue(json.toString(), OfficeHeadlines.class);
+    
+    OfficeService service = WeatherServiceGenerator.createService(OfficeService.class);
+    Call<OfficeHeadlines> callSync = service.getOfficeHeadlines("DTX");
+    try {
+      Response<OfficeHeadlines> response = callSync.execute();
+      OfficeHeadlines headlineResponse = response.body();
+      
+      System.out.println(headlineResponse.toJson(false));
+      
+      assertEquals(office, headlineResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
