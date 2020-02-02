@@ -27,9 +27,9 @@ public class TextForecast {
     if (pretty)
 			gsonBuilder
 					.setPrettyPrinting();
+    
       return gsonBuilder
           .serializeSpecialFloatingPointValues()
-          //.registerTypeAdapter(GeometryCollection.class, new InterfaceAdapter())
           .create()
           .toJson(this);
   }

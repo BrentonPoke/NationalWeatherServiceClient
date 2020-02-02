@@ -3,8 +3,7 @@ package gov.noaa.products;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,12 +31,14 @@ public class Products {
         public Product() {
         }
     }
-    public String toJson(){
-        try {
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
+  public String toJson(boolean pretty) {
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    if (pretty)
+      gsonBuilder
+          .setPrettyPrinting();
+    return gsonBuilder
+        .serializeSpecialFloatingPointValues()
+        .create()
+        .toJson(this);
+  }
 }

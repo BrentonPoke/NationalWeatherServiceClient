@@ -329,7 +329,7 @@ public class LibraryTest {
     Call<TextForecast> callSync = service.getTextForecast("EAX", 50, 70, "si");
     try {
       Response<TextForecast> response = callSync.execute();
-      System.out.println(response.body().toJson(true));
+      System.out.println(response.body().toJson(false));
       assertEquals(forecast, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
@@ -448,7 +448,7 @@ public class LibraryTest {
     try {
       Response<Products> response = callSync.execute();
       Products products1 = response.body();
-      System.out.println(products1.toJson());
+      System.out.println(products1.toJson(false));
 
       assertEquals(products, products1);
     } catch (IOException e) {
