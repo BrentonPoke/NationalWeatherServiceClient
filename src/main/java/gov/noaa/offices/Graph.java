@@ -1,7 +1,6 @@
 
 package gov.noaa.offices;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class Graph {
 
     private String content;
-    @JsonProperty("@id")
     private String id;
     private Boolean important;
     private String issuanceTime;
