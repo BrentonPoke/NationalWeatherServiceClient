@@ -450,7 +450,7 @@ public class LibraryTest {
       Products products1 = response.body();
       System.out.println(products1.toJson());
 
-      assertEquals(products.toJson(), products1.toJson());
+      assertEquals(products, products1);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
