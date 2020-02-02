@@ -545,6 +545,29 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
+  
+  @Test
+  @SneakyThrows
+  public void ProductTypesByLocationIDTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/productTypebylocation.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    ObjectMapper mapper = new ObjectMapper();
+    ProductTypes products =
+        mapper.readValue(json.toString(), ProductTypes.class);
+    
+    ProductsService service = WeatherServiceGenerator.createService(ProductsService.class);
+    Call<ProductTypes> callSync = service.getProductTypesByLocationID("DTW");
+    try {
+      Response<ProductTypes> response = callSync.execute();
+      
+      assertEquals(products, response.body());
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
 
   @Test
   @SneakyThrows

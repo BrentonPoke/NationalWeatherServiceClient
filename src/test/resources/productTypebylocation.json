@@ -1,0 +1,16 @@
+{
+  "@graph": [
+    {
+      "productCode": "CF6",
+      "productName": "WFO Monthly/Daily Climate Data"
+    },
+    {
+      "productCode": "CLI",
+      "productName": "Climatological Report (Daily)"
+    },
+    {
+      "productCode": "TAF",
+      "productName": "Terminal Aerodrome Forecast"
+    }
+  ]
+}

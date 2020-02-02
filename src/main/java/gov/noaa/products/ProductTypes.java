@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 @SuppressWarnings("unused")
 public class ProductTypes {
     @JsonProperty("@graph")
-    List<Type> graph;
+    List<Type> types;
     
     @Data
   static class Type {
