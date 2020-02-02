@@ -1,0 +1,16 @@
+{
+  "@graph": [
+    {
+      "@id": "https://api.weather.gov/offices/DTX/headlines/061ecd7254f56401fc76554022c06ff5",
+      "id": "061ecd7254f56401fc76554022c06ff5",
+      "office": "https://api.weather.gov/offices/DTX",
+      "important": false,
+      "issuanceTime": "2019-07-15T16:51:00+00:00",
+      "link": "http://www.weather.gov/dtx/ExpertForecastOpinionAFD",
+      "name": "ExpertForecastOpinionAFD",
+      "title": "Expert Forecast Opinion",
+      "summary": null,
+      "content": "<p>&lt;/handlerclass=TextProductIncludeWidget&pil=AFD&siteid=DTX&description=&wrapperStart=&wrapperEnd=&headline=0&newline=0&link=0&hideIssuance=0&selNulProduct=all&noProductText=/&gt;</p>\r\n"
+    }
+  ]
+}
