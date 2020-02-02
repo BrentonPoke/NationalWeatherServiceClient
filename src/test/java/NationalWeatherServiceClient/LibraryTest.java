@@ -17,6 +17,8 @@ import gov.noaa.glossary.GlossaryService;
 import gov.noaa.gridpoints.Forecast;
 import gov.noaa.gridpoints.GridpointsService;
 import gov.noaa.gridpoints.TextForecast;
+import gov.noaa.offices.Office;
+import gov.noaa.offices.OfficeService;
 import gov.noaa.points.PointData;
 import gov.noaa.points.PointService;
 import gov.noaa.products.ProductLocations;
@@ -641,6 +643,32 @@ public class LibraryTest {
       System.out.println(response.body().toJson(false));
 
       assertEquals(zones, zoneResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+  
+  @Test
+  @SneakyThrows
+  public void OfficeByIDTest() throws FileNotFoundException {
+    FileInputStream input = new FileInputStream("src/test/resources/office.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+    
+    ObjectMapper mapper = new ObjectMapper();
+    
+    Office office = mapper.readValue(json.toString(), Office.class);
+    
+    OfficeService service = WeatherServiceGenerator.createService(OfficeService.class);
+    Call<Office> callSync = service.getOfficeByID("CLE");
+    try {
+      Response<Office> response = callSync.execute();
+      Office officeResponse = response.body();
+      
+      System.out.println(officeResponse.toJson(false));
+      
+      assertEquals(office, officeResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
