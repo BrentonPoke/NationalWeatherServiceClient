@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Products {
     
     @JsonProperty("@graph")
-    private List<Product> graph;
+    private List<Product> products;
     
     @Data
     @JsonIgnoreProperties(value = "@id")

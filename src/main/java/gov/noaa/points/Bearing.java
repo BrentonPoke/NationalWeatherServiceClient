@@ -1,8 +1,8 @@
 package gov.noaa.points;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Bearing{
 
-	@SerializedName("unitCode")
+	@JsonProperty("unitCode")
 	private String unitCode;
 
-	@SerializedName("value")
 	private Integer value;
 	public String toJson(boolean pretty){
 		if(pretty)
