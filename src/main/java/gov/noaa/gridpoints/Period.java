@@ -11,7 +11,7 @@ public class Period{
 
 	private String detailedForecast;
 
-	private Object temperatureTrend;
+	private String temperatureTrend;
 
 	private String shortForecast;
 
