@@ -9,6 +9,10 @@
       "productName": "Climatological Report (Daily)"
     },
     {
+      "productCode": "CLM",
+      "productName": "Climatological Report (Monthly)"
+    },
+    {
       "productCode": "TAF",
       "productName": "Terminal Aerodrome Forecast"
     }

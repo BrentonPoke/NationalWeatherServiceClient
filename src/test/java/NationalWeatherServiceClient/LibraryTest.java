@@ -558,7 +558,7 @@ public class LibraryTest {
     ProductTypes products =
         mapper.readValue(json.toString(), ProductTypes.class);
     
-    ProductsService service = WeatherServiceGenerator.createService(ProductsService.class);
+    ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductTypes> callSync = service.getProductTypesByLocationID("DTW");
     try {
       Response<ProductTypes> response = callSync.execute();
@@ -737,7 +737,7 @@ public class LibraryTest {
     
     OfficeHeadlines office = mapper.readValue(json.toString(), OfficeHeadlines.class);
     
-    OfficeService service = WeatherServiceGenerator.createService(OfficeService.class);
+    OfficeService service = TestWeatherServiceGenerator.createService(OfficeService.class);
     Call<OfficeHeadlines> callSync = service.getOfficeHeadlines("DTX");
     try {
       Response<OfficeHeadlines> response = callSync.execute();
