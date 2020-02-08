@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @SuppressWarnings("unused")
 public class Zones {

@@ -25,7 +25,11 @@ public class Properties{
 
 	private String forecastOffice;
 
-	private String updateTime, updated, units, forecastGenerator, generatedAt;
+	private String updateTime;
+	private String updated;
+	private String units;
+	private String forecastGenerator;
+	private String generatedAt;
 
 	@JsonProperty("@id")
 	private String id;

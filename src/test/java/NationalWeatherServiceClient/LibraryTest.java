@@ -309,7 +309,8 @@ public class LibraryTest {
     try {
       Response<Forecast> response = callSync.execute();
       System.out.println(response.body().toJson(true));
-      assertEquals(rawData, response.body());
+      Forecast rawDataResponse = response.body();
+      assertEquals(rawData, rawDataResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
