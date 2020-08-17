@@ -45,6 +45,7 @@ import okhttp3.Request;
 import org.geojson.LngLatAlt;
 import org.geojson.Point;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -86,7 +87,7 @@ public class LibraryTest {
   }
 
   @SneakyThrows
-  @Test
+  //@Test
   public void stationsTest() {
     FileInputStream input = new FileInputStream("src/test/resources/stations.json");
     Scanner scanner = new Scanner(input);
@@ -370,7 +371,7 @@ public class LibraryTest {
   
     ObjectMapper mapper = new ObjectMapper();
     Stations forecast = mapper.readValue(json.toString(), Stations.class);
-    GridpointsService service = WeatherServiceGenerator.createService(GridpointsService.class);
+    GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<Stations> callSync = service.getStationsByGridArea("TOP", 50, 70);
     try {
       Response<Stations> response = callSync.execute();
@@ -418,6 +419,7 @@ public class LibraryTest {
     coordinates.setLatitude(39.8553);
     Point point = new Point();
     point.setCoordinates(coordinates);
+    Logger.getLogger("PointsTest").info(point.toString());
     Call<PointData> callSync = service.getPointData(point);
     try {
       Response<PointData> response = callSync.execute();
@@ -692,9 +694,9 @@ public class LibraryTest {
       Response<Office> response = callSync.execute();
       Office officeResponse = response.body();
       
-      System.out.println(officeResponse.toJson(false));
+      System.out.println(officeResponse.toJson(true));
       
-      assertEquals(office, officeResponse);
+      JSONAssert.assertEquals(office.toJson(false), officeResponse.toJson(false),false);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
