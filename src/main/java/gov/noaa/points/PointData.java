@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Data;
-import org.geojson.LngLatAlt;
 import org.geojson.Point;
 
 @Data

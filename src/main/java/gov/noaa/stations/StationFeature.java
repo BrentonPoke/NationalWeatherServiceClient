@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class StationFeature extends Feature {
+	public void setGeometry(org.geojson.Point feature){
+		geometry = feature;
+	}
 	private StationProperties properties;
 	public String toJson(boolean pretty){
 		if(pretty)

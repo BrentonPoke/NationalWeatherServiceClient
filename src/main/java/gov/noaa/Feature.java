@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geojson.Point;
+import org.geojson.GeoJsonObject;
 
 @Data
 @SuppressWarnings("unused")
@@ -14,7 +14,7 @@ import org.geojson.Point;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Feature {
 
-    protected Point geometry;
+    protected GeoJsonObject geometry;
     protected String id;
     protected String type;
     public String toJson(boolean pretty){
