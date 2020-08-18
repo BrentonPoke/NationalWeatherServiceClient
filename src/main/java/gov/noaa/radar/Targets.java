@@ -12,7 +12,7 @@ public class Targets{
 	private Radar radar;
 
 	@JsonProperty("ldm")
-	private Ldm ldm;
+	private LDM ldm;
 
 	@JsonProperty("client")
 	private Map<String,Boolean> client;
