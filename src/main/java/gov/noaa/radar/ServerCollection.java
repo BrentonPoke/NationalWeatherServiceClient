@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Profiler {
+class ServerCollection {
   @JsonProperty("@graph")
-  private List<RadarProfiler> profilers;
+  private List<Server> servers;
 }

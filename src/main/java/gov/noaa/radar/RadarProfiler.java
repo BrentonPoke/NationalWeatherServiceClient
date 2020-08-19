@@ -11,11 +11,11 @@ public class RadarProfiler {
 
     private String stationId;
 
-    private Integer speed;
+    private Float speed;
 
     private Double direction;
 
-    private Double height;
+    private Integer height;
 
     private ZonedDateTime timestamp;
 

@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Queue {
+class Queue {
   @JsonProperty("@graph")
   private List<RadarQueue> queues;
 
