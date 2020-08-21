@@ -3,20 +3,17 @@ package gov.noaa.zones;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.GsonBuilder;
+import gov.noaa.Feature;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geojson.Geometry;
 
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("unused")
-public class ZoneFeature {
-
-    private Geometry geometry;
-    private String id;
+public class ZoneFeature extends Feature {
+    
     private ZoneProperties properties;
-    private String type;
     public String toJson(boolean pretty){
         GsonBuilder builder = new GsonBuilder();
         if(pretty)

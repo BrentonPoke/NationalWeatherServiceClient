@@ -30,6 +30,7 @@ import gov.noaa.products.ProductsService;
 import gov.noaa.stations.Station;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
+import gov.noaa.stations.observations.ObservationFeature;
 import gov.noaa.zones.ZoneForecast;
 import gov.noaa.zones.ZoneService;
 import gov.noaa.zones.Zones;
@@ -87,7 +88,7 @@ public class LibraryTest {
   }
 
   @SneakyThrows
-  //@Test
+  // @Test
   public void stationsTest() {
     FileInputStream input = new FileInputStream("src/test/resources/stations.json");
     Scanner scanner = new Scanner(input);
@@ -302,8 +303,9 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
-    ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY,true);
+
+    ObjectMapper mapper =
+        new ObjectMapper().configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
     Forecast rawData = mapper.readValue(json.toString(), Forecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
     Call<Forecast> callSync = service.getRawForecastData("TOP", 40, 60);
@@ -324,7 +326,7 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     ObjectMapper mapper = new ObjectMapper();
     TextForecast forecast = mapper.readValue(json.toString(), TextForecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
@@ -345,7 +347,7 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     ObjectMapper mapper = new ObjectMapper();
     TextForecast forecast = mapper.readValue(json.toString(), TextForecast.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
@@ -368,7 +370,7 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     ObjectMapper mapper = new ObjectMapper();
     Stations forecast = mapper.readValue(json.toString(), Stations.class);
     GridpointsService service = TestWeatherServiceGenerator.createService(GridpointsService.class);
@@ -389,7 +391,7 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     ObjectMapper mapper = new ObjectMapper();
     Station forecast = mapper.readValue(json.toString(), Station.class);
     StationService service = WeatherServiceGenerator.createService(StationService.class);
@@ -410,7 +412,7 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     ObjectMapper mapper = new ObjectMapper();
     PointData pointData = mapper.readValue(json.toString(), PointData.class);
     PointService service = WeatherServiceGenerator.createService(PointService.class);
@@ -445,7 +447,7 @@ public class LibraryTest {
             .build();
 
     ObjectMapper mapper = new ObjectMapper();
-    Products products = mapper.readValue(json.toString(),Products.class);
+    Products products = mapper.readValue(json.toString(), Products.class);
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<Products> callSync = service.getProducts(params);
     try {
@@ -468,8 +470,7 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
     ObjectMapper mapper = new ObjectMapper();
-    ProductLocations products =
-        mapper.readValue(json.toString(), ProductLocations.class);
+    ProductLocations products = mapper.readValue(json.toString(), ProductLocations.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocations();
@@ -535,8 +536,7 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
     ObjectMapper mapper = new ObjectMapper();
-    ProductLocations products =
-        mapper.readValue(json.toString(), ProductLocations.class);
+    ProductLocations products = mapper.readValue(json.toString(), ProductLocations.class);
 
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductLocations> callSync = service.getProductLocationsForType("ABV");
@@ -548,7 +548,7 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void ProductTypesByLocationIDTest() throws FileNotFoundException {
@@ -556,16 +556,15 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     ObjectMapper mapper = new ObjectMapper();
-    ProductTypes products =
-        mapper.readValue(json.toString(), ProductTypes.class);
-    
+    ProductTypes products = mapper.readValue(json.toString(), ProductTypes.class);
+
     ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductTypes> callSync = service.getProductTypesByLocationID("DTW");
     try {
       Response<ProductTypes> response = callSync.execute();
-      
+
       assertEquals(products, response.body());
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
@@ -604,11 +603,13 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
     ImmutableMap<String, String> params =
-        ImmutableMap.<String, String>builder().put("area", "DE").put("type", "land").build();
+        ImmutableMap.<String, String>builder()
+            .put("area", "DE")
+            .put("type", "land").build();
 
     ObjectMapper mapper = new ObjectMapper();
     Zones zones = mapper.readValue(json.toString(), Zones.class);
-    ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
+    ZoneService service = TestWeatherServiceGenerator.createService(ZoneService.class);
     Call<Zones> callSync = service.getZones(params);
     try {
       Response<Zones> response = callSync.execute();
@@ -632,19 +633,19 @@ public class LibraryTest {
             .put("area", "AR")
             .put("include_geometry", "false")
             .build();
-  
+
     ObjectMapper mapper = new ObjectMapper();
     Zones zones = mapper.readValue(json.toString(), Zones.class);
-    System.out.println(zones.toJson(false));
-    ZoneService service = WeatherServiceGenerator.createService(ZoneService.class);
+    //System.out.println(zones.toJson(false));
+    ZoneService service = TestWeatherServiceGenerator.createService(ZoneService.class);
     Call<Zones> callSync = service.getZonesByType("land", params);
     try {
       Response<Zones> response = callSync.execute();
       Zones zoneResponse = response.body();
 
-      System.out.println(response.body().toJson(false));
+      //System.out.println(response.body().toJson(false));
 
-      assertEquals(zones, zoneResponse);
+      assertEquals(zones.toJson(false), zoneResponse.toJson(false));
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
@@ -657,7 +658,7 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-  
+
     ObjectMapper mapper = new ObjectMapper();
 
     ZoneForecast zones = mapper.readValue(json.toString(), ZoneForecast.class);
@@ -675,7 +676,7 @@ public class LibraryTest {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void OfficeByIDTest() throws FileNotFoundException {
@@ -683,25 +684,25 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     ObjectMapper mapper = new ObjectMapper();
-    
+
     Office office = mapper.readValue(json.toString(), Office.class);
-    
+
     OfficeService service = WeatherServiceGenerator.createService(OfficeService.class);
     Call<Office> callSync = service.getOfficeByID("CLE");
     try {
       Response<Office> response = callSync.execute();
       Office officeResponse = response.body();
-      
+
       System.out.println(officeResponse.toJson(true));
-      
-      JSONAssert.assertEquals(office.toJson(false), officeResponse.toJson(false),false);
+
+      JSONAssert.assertEquals(office.toJson(false), officeResponse.toJson(false), false);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void HeadlineByIDTest() throws FileNotFoundException {
@@ -709,25 +710,26 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     ObjectMapper mapper = new ObjectMapper();
-    
+
     Headline office = mapper.readValue(json.toString(), Headline.class);
-    
+
     OfficeService service = WeatherServiceGenerator.createService(OfficeService.class);
-    Call<Headline> callSync = service.getOfficeHeadlineBYID("DTX", "061ecd7254f56401fc76554022c06ff5");
+    Call<Headline> callSync =
+        service.getOfficeHeadlineBYID("DTX", "061ecd7254f56401fc76554022c06ff5");
     try {
       Response<Headline> response = callSync.execute();
       Headline headlineResponse = response.body();
-      
+
       System.out.println(headlineResponse.toJson(false));
-      
+
       assertEquals(office, headlineResponse);
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }
   }
-  
+
   @Test
   @SneakyThrows
   public void HeadlineTest() throws FileNotFoundException {
@@ -735,20 +737,46 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    
+
     ObjectMapper mapper = new ObjectMapper();
-    
+
     OfficeHeadlines office = mapper.readValue(json.toString(), OfficeHeadlines.class);
-    
+
     OfficeService service = TestWeatherServiceGenerator.createService(OfficeService.class);
     Call<OfficeHeadlines> callSync = service.getOfficeHeadlines("DTX");
     try {
       Response<OfficeHeadlines> response = callSync.execute();
       OfficeHeadlines headlineResponse = response.body();
-      
+
       System.out.println(headlineResponse.toJson(false));
-      
+
       assertEquals(office, headlineResponse);
+    } catch (IOException e) {
+      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
+    }
+  }
+
+  @Test
+  public void getObservationsTest() throws IOException {
+    FileInputStream input = new FileInputStream("src/test/resources/observations.json");
+    Scanner scanner = new Scanner(input);
+    StringBuilder json = new StringBuilder();
+    while (scanner.hasNext()) json.append(scanner.nextLine());
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    ObservationFeature feature = mapper.readValue(json.toString(), ObservationFeature.class);
+
+    StationService service = TestWeatherServiceGenerator.createService(StationService.class);
+    Call<ObservationFeature> callSync = service.getObservations("GYGM4");
+
+    try {
+      Response<ObservationFeature> response = callSync.execute();
+      ObservationFeature observationResponse = response.body();
+
+      // System.out.println(feature.toJson(false));
+
+      assertEquals(feature.toJson(false), observationResponse.toJson(false));
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Elevation{
 	private String unitCode;
-	private Double value;
+	private Float value;
 	public String toJson(boolean pretty){
 		if(pretty)
         return new GsonBuilder().serializeSpecialFloatingPointValues().setPrettyPrinting().create().toJson(this);

@@ -13,4 +13,6 @@ public interface ZoneService {
   Call<Zones> getZonesByType(@Path(value = "type") String type, @QueryMap Map<String, String> params);
   @GET("/zones/{type}/{zoneId}/forecast")
   Call<ZoneForecast> getZoneForecastByID(@Path(value = "type") String type,@Path(value = "zoneId") String zoneId);
+  @GET("/zones/{type}/{zoneId}")
+  Call<ZoneForecast> getZoneByID(@Path(value = "type") String type,@Path(value = "zoneId") String zoneId);
 }

@@ -2,8 +2,10 @@ package gov.noaa.radar.station;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import lombok.Data;
 
-public class Stations{
+@Data
+public class RadarStations{
 
 	@JsonProperty("features")
 	private List<RadarStationFeature> features;

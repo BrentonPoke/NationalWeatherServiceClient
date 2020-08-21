@@ -3,6 +3,7 @@ package gov.noaa.zones;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.GsonBuilder;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,12 @@ public class ZoneForecast {
     //@JsonDeserialize(using = EmptyToNullObject.class)
     //private FeatureCollection geometry;
     private List<Period> periods;
-    private String updated;
+    private ZonedDateTime updated;
+    
+    public void setUpdated(String updated) {
+        this.updated = ZonedDateTime.parse(updated);
+    }
+    
     public String toJson(boolean pretty){
         GsonBuilder builder = new GsonBuilder();
         if(pretty)

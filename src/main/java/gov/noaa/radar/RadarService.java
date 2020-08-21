@@ -2,7 +2,7 @@ package gov.noaa.radar;
 
 import gov.noaa.radar.station.Alarm;
 import gov.noaa.radar.station.RadarStationFeature;
-import gov.noaa.radar.station.Stations;
+import gov.noaa.radar.station.RadarStations;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,7 @@ public interface RadarService {
   @GET("/radar/servers/{id}")
   Call<Server> getServer(@Path(value = "id")String id);
   @GET("/radar/stations")
-  Call<Stations> getRadarStations(
+  Call<RadarStations> getRadarStations(
       @QueryMap Map<String,String> stationTypes,
       @Query(value = "reportingHost") String rHost,
       @Query(value= "host")String host);
