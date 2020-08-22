@@ -1,6 +1,8 @@
 package gov.noaa.stations;
 
+import gov.noaa.stations.observations.Observation;
 import gov.noaa.stations.observations.ObservationFeature;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,4 +21,8 @@ public interface StationService {
   @GET("/stations/{stationId}/observations")
   Call<ObservationFeature> getObservations(
       @Path("stationId")String stationId);
+  @GET("/stations/{stationId}/observations/{time}")
+  Call<Observation> getObservationByTime(@Path("stationId")String stationId, @Path("time") ZonedDateTime time);
+  
+  
 }
