@@ -1,24 +1,23 @@
 package gov.noaa.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Getter;
 
+@Getter
 public enum Status {
   
-  ACTUAL("Actual"),
-  EXERCISE("Exercise"),
-  SYSTEM("System"),
-  TEST("Test"),
-  DRAFT("Draft");
+  ACTUAL("Actual","actual"),
+  EXERCISE("Exercise","exercise"),
+  SYSTEM("System","system"),
+  TEST("Test","test"),
+  DRAFT("Draft","draft");
   @JsonValue
-  private final String value;
+  private String uppercase;
   
-  Status(String value) {
-    this.value = value;
+  private String lowercase;
+  
+  Status(String uppercase, String lowercase) {
+    this.uppercase = uppercase;
+    this.lowercase = lowercase;
   }
-  
-  @Override
-  public String toString() {
-    return this.value;
-  }
-  
 }

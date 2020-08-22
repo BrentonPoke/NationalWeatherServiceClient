@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import gov.noaa.Geocode;
 import gov.noaa.Reference;
+import gov.noaa.enums.Certainty;
+import gov.noaa.enums.MessageType;
 import gov.noaa.enums.Status;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -21,7 +23,7 @@ public class AlertProperties {
     private List<String> affectedZones;
     private String areaDesc;
     private String category;
-    private String certainty;
+    private Certainty certainty;
     private String description;
     private ZonedDateTime effective;
     private ZonedDateTime ends;
@@ -31,7 +33,7 @@ public class AlertProperties {
     private String headline;
     private String id;
     private String instruction;
-    private String messageType;
+    private MessageType messageType;
     private ZonedDateTime onset;
     private AlertParameters parameters;
     private List<Reference> references;

@@ -166,7 +166,8 @@ public class LibraryTest {
     area.add(State.CONNECTICUT.getAbbreviation());
     System.out.println(area.toString()
         .replace(" ","")
-        .replace(" ",""));
+        .replace("[","")
+        .replace("]",""));
     ImmutableMap<String, String> params =
         ImmutableMap.<String, String>builder()
             .put("active", "true")
