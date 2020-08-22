@@ -12,6 +12,7 @@ import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.alerts.AlertService;
 import gov.noaa.alerts.AlertTypes;
 import gov.noaa.alerts.Alerts;
+import gov.noaa.enums.State;
 import gov.noaa.glossary.Glossary;
 import gov.noaa.glossary.GlossaryService;
 import gov.noaa.gridpoints.Forecast;
@@ -37,6 +38,7 @@ import gov.noaa.zones.Zones;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -157,11 +159,17 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
     System.out.println(json);
-
+    ArrayList<String> area = new ArrayList<>();
+    area.add(State.CALIFORNIA.getAbbreviation());
+    area.add(State.COLORADO.getAbbreviation());
+    area.add(State.CONNECTICUT.getAbbreviation());
+    System.out.println(area.toString()
+        .replace(" ","")
+        .replace(" ",""));
     ImmutableMap<String, String> params =
         ImmutableMap.<String, String>builder()
             .put("active", "true")
-            .put("area", "CA,CO,CT")
+            .put("area","CO,CA,CT")
             .put("certainty", "likely")
             .put("status", "actual")
             .put("limit", "3")

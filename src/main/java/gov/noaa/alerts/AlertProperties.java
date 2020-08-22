@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import gov.noaa.Geocode;
 import gov.noaa.Reference;
+import gov.noaa.enums.Status;
 import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
@@ -39,7 +40,7 @@ public class AlertProperties {
     private String senderName;
     private ZonedDateTime sent;
     private String severity;
-    private String status;
+    private Status status;
     private String type;
     private String urgency;
     public void setSent(String sent){

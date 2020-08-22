@@ -4,6 +4,7 @@ package gov.noaa.zones;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gov.noaa.enums.State;
 import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
@@ -19,13 +20,16 @@ public class ZoneProperties {
     private List<String> forecastOffices;
     private String id;
     private String name;
-    private String state;
+    private State state;
     private List<String> timeZone;
     private String type;
     private String radarStation;
     private List<String> observationStations;
     private ZonedDateTime effectiveDate;
     private ZonedDateTime expirationDate;
+    public void setState(String state){
+        this.state = State.valueOfName(state);
+    }
     
     public void setEffectiveDate(String effectiveDate) {
         this.effectiveDate = ZonedDateTime.parse(effectiveDate);
