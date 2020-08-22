@@ -27,7 +27,7 @@ import gov.noaa.products.ProductLocations;
 import gov.noaa.products.ProductTypes;
 import gov.noaa.products.Products;
 import gov.noaa.products.ProductsService;
-import gov.noaa.stations.Station;
+import gov.noaa.stations.StationFeature;
 import gov.noaa.stations.StationService;
 import gov.noaa.stations.Stations;
 import gov.noaa.stations.observations.ObservationFeature;
@@ -393,11 +393,11 @@ public class LibraryTest {
     while (scanner.hasNext()) json.append(scanner.nextLine());
 
     ObjectMapper mapper = new ObjectMapper();
-    Station forecast = mapper.readValue(json.toString(), Station.class);
+    StationFeature forecast = mapper.readValue(json.toString(), StationFeature.class);
     StationService service = WeatherServiceGenerator.createService(StationService.class);
-    Call<Station> callSync = service.getStation("KMYZ");
+    Call<StationFeature> callSync = service.getStation("KMYZ");
     try {
-      Response<Station> response = callSync.execute();
+      Response<StationFeature> response = callSync.execute();
 
       assertEquals(forecast, response.body());
     } catch (IOException e) {

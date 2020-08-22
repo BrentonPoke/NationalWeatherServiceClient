@@ -13,7 +13,7 @@ public interface StationService {
   @GET("/stations")
   Call<Stations> getStations(@QueryMap Map<String,String> map);
   @GET("/stations/{stationId}")
-  Call<Station> getStation(@Path(value = "stationId") String stationId);
+  Call<StationFeature> getStation(@Path(value = "stationId") String stationId);
   @GET("/stations/{stationId}/observations")
   Call<ObservationFeature> getObservations(
       @Path("stationId")String stationId,
