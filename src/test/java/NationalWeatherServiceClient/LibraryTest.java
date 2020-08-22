@@ -159,6 +159,7 @@ public class LibraryTest {
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
     System.out.println(json);
+    //TODO convert this to a Utils method for an upcoming iteration of the API
     ArrayList<String> area = new ArrayList<>();
     area.add(State.CALIFORNIA.getAbbreviation());
     area.add(State.COLORADO.getAbbreviation());
