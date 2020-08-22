@@ -21,7 +21,7 @@ public enum Certainty {
     }
   }
   
-  private Certainty(String uppercase, String lowercase) {
+  Certainty(String uppercase, String lowercase) {
     this.uppercase = uppercase;
     this.lowercase = lowercase;
   }
