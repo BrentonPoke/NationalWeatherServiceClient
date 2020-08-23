@@ -8,14 +8,13 @@ import gov.noaa.Geocode;
 import gov.noaa.Reference;
 import gov.noaa.enums.Certainty;
 import gov.noaa.enums.MessageType;
+import gov.noaa.enums.Severity;
 import gov.noaa.enums.Status;
 import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @SuppressWarnings("unused")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AlertProperties {
@@ -41,7 +40,7 @@ public class AlertProperties {
     private String sender;
     private String senderName;
     private ZonedDateTime sent;
-    private String severity;
+    private Severity severity;
     private Status status;
     private String type;
     private String urgency;

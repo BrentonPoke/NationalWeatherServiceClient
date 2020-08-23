@@ -6,10 +6,8 @@ import com.google.gson.GsonBuilder;
 import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
 @Data
 @SuppressWarnings("unused")
 public class ZoneForecast {

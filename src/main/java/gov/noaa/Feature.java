@@ -5,12 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.geojson.GeoJsonObject;
 
 @Data
-@SuppressWarnings("unused")
-@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Feature {
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import gov.noaa.enums.State;
+import gov.noaa.enums.ZoneType;
 import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class ZoneProperties {
     private String name;
     private State state;
     private List<String> timeZone;
-    private String type;
+    private ZoneType type;
     private String radarStation;
     private List<String> observationStations;
     private ZonedDateTime effectiveDate;

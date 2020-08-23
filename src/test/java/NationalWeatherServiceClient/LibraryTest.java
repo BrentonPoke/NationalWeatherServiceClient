@@ -214,7 +214,7 @@ public class LibraryTest {
     try {
       Response<Alerts> response = callSync.execute();
       Alerts alertsResponse = response.body();
-      assertEquals(alerts, alertsResponse);
+      assertEquals(alerts.toJson(false), alertsResponse.toJson(false));
     } catch (IOException e) {
       Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
     }

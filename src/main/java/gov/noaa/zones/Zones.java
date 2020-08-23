@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @SuppressWarnings("unused")

@@ -6,13 +6,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Status {
+public enum Severity {
   
-  ACTUAL("Actual","actual"),
-  EXERCISE("Exercise","exercise"),
-  SYSTEM("System","system"),
-  TEST("Test","test"),
-  DRAFT("Draft","draft");
+  UNKNOWN("Unkown","unknown"),
+  MINOR("Minor","minor"),
+  MODERATE("Moderate","moderate"),
+  SEVERE("Severe","severe"),
+  EXTREME("Extreme","extreme");
   @JsonValue
   private String uppercase;
   
