@@ -164,14 +164,13 @@ public class LibraryTest {
     area.add(State.CALIFORNIA.getAbbreviation());
     area.add(State.COLORADO.getAbbreviation());
     area.add(State.CONNECTICUT.getAbbreviation());
-    System.out.println(area.toString()
+    String a = area.toString()
         .replace(" ","")
         .replace("[","")
-        .replace("]",""));
+        .replace("]","");
     ImmutableMap<String, String> params =
         ImmutableMap.<String, String>builder()
-            .put("active", "true")
-            .put("area","CO,CA,CT")
+            .put("area",a)
             .put("certainty", "likely")
             .put("status", "actual")
             .put("limit", "3")
@@ -179,8 +178,9 @@ public class LibraryTest {
 
     ObjectMapper mapper = new ObjectMapper();
     Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
-    AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
-    Call<Alerts> callSync = service.getAlerts(params);
+    AlertService service = WeatherServiceGenerator.createService(AlertService.class);
+    Call<Alerts> callSync = service.getActiveAlerts(params);
+    Logger.getAnonymousLogger().info(callSync.request().url().toString());
     try {
       Response<Alerts> response = callSync.execute();
 
@@ -249,10 +249,11 @@ public class LibraryTest {
     Scanner scanner = new Scanner(input);
     StringBuilder json = new StringBuilder();
     while (scanner.hasNext()) json.append(scanner.nextLine());
-    System.out.println(json);
-
+    //System.out.println(json);
+    String a = json.toString();
     ObjectMapper mapper = new ObjectMapper();
-    Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
+    Alerts alerts = mapper.readValue(a, Alerts.class);
+    
     AlertService service = TestWeatherServiceGenerator.createService(AlertService.class);
     Call<Alerts> callSync = service.getAlertsByMarineRegion("GL");
     try {
