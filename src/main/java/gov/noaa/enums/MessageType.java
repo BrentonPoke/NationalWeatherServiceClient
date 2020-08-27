@@ -2,9 +2,11 @@ package gov.noaa.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.collect.ImmutableMap;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum MessageType {
   
   ALERT("Alert","alert"),
@@ -19,10 +21,6 @@ public enum MessageType {
     for (MessageType c: values()) {
       CONSTANTS = ImmutableMap.<String, MessageType>builder().put(c.lowercase, c);
     }
-  }
-  MessageType(String uppercase, String lowercase) {
-    this.uppercase = uppercase;
-    this.lowercase = lowercase;
   }
   public static MessageType valueFromLowercase(String value) {
     MessageType constant = CONSTANTS.build().get(value);

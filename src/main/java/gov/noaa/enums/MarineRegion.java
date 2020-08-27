@@ -12,6 +12,12 @@ public enum MarineRegion {
   GL("GL"),
   GM("GM"),
   PA("PA"),
-  PI("PI");
+  PI("PI"),
+  AR("AR"),
+  CR("CR"),
+  ER("ER"),
+  PR("PR"),
+  SR("SR"),
+  WR("WR");
   private final String value;
 }
