@@ -505,7 +505,7 @@ public class LibraryTest {
     ObjectMapper mapper = new ObjectMapper();
     ProductTypes products = mapper.readValue(json.toString(), ProductTypes.class);
 
-    ProductsService service = TestWeatherServiceGenerator.createService(ProductsService.class);
+    ProductsService service = WeatherServiceGenerator.createService(ProductsService.class);
     Call<ProductTypes> callSync = service.getProductTypes();
     try {
       Response<ProductTypes> response = callSync.execute();
@@ -778,7 +778,7 @@ public class LibraryTest {
 
     ObservationFeature feature = mapper.readValue(json.toString(), ObservationFeature.class);
 
-    StationService service = TestWeatherServiceGenerator.createService(StationService.class);
+    StationService service = WeatherServiceGenerator.createService(StationService.class);
     Call<ObservationFeature> callSync = service.getObservations("GYGM4");
 
     try {

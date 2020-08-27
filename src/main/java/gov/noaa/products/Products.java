@@ -4,6 +4,7 @@ package gov.noaa.products;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.GsonBuilder;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,14 @@ public class Products {
      static class Product {
         
         private String id;
-        private String issuanceTime;
+        private ZonedDateTime issuanceTime;
         private String issuingOffice;
         private String productCode;
         private String productName;
         private String wmoCollectiveId;
+        public void setIssuanceTime(String timestamp){
+          this.issuanceTime = ZonedDateTime.parse(timestamp);
+        }
     
         public Product() {
         }

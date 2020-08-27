@@ -8,7 +8,7 @@ public class MaxTemperatureLast24Hours{
 	private String unitCode;
 
 	@JsonProperty("qualityControl")
-	private Object qualityControl;
+	private String qualityControl;
 
 	@JsonProperty("value")
 	private Float value;
