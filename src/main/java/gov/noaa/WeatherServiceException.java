@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
@@ -18,7 +17,7 @@ public class WeatherServiceException extends IOException {
     private String correlationId;
     private String detail;
     private String instance;
-    private Long status;
+    private Integer status;
     private String title;
     private String type;
     public String toJson(boolean pretty){
