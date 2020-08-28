@@ -2,8 +2,7 @@ package gov.noaa.gridpoints;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,23 +26,18 @@ public class Period{
 
 	private Integer temperature;
 
-	private String startTime;
-	
-	public LocalDateTime getStartTime(){
-		return LocalDateTime.parse(this.startTime, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-	}
+	private ZonedDateTime startTime;
 
 	private Boolean isDaytime;
 
-	private String endTime;
-	
-	public LocalDateTime getEndTime(){
-		return LocalDateTime.parse(this.startTime,DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-	}
+	private ZonedDateTime endTime;
+	public void setStartTime(String time){this.startTime = ZonedDateTime.parse(time);}
+	public void setEndTime(String time){this.endTime = ZonedDateTime.parse(time);}
 
 	private String windDirection;
 
 	private String windSpeed;
+	
 	public String toJson(boolean pretty){
 		if(pretty)
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);

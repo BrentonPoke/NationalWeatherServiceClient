@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import gov.noaa.stations.Elevation;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,8 @@ public class Properties{
 
 	private String forecastOffice;
 
-	private String updateTime;
-	private String updated;
+	private ZonedDateTime updateTime;
+	private ZonedDateTime updated;
 	private String units;
 	private String forecastGenerator;
 	private String generatedAt;
@@ -95,6 +96,8 @@ public class Properties{
 	private Measurement windGust;
 	private Measurement windSpeed;
 	private Measurement windWaveHeight;
+	public void setUpdated(String time){this.updated = ZonedDateTime.parse(time);}
+	public void setUpdateTime(String time){this.updateTime = ZonedDateTime.parse(time);}
 	public String toJson(boolean pretty){
 		if(pretty)
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
