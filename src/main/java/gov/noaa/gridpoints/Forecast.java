@@ -4,23 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.GsonBuilder;
 import java.util.List;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.geojson.Polygon;
+import gov.noaa.Feature;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Forecast{
-
-	private Polygon geometry;
-
-	private String id;
-
-	private String type;
+public class Forecast extends Feature {
 	
 	private List<String> context;
 
 	private Properties properties;
+	
+	public void setGeometry(org.geojson.Polygon geometry) {
+		this.geometry = geometry;
+	}
+
 	public String toJson(boolean pretty){
 		GsonBuilder gsonbuilder = new GsonBuilder();
 		if(pretty)
