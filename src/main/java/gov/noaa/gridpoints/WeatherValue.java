@@ -4,6 +4,7 @@ package gov.noaa.gridpoints;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,12 @@ import lombok.NoArgsConstructor;
 @SuppressWarnings("unused")
 public class WeatherValue {
 
-    private String validTime;
+    private ZonedDateTime validTime;
     private String value;
     private List<WeatherData> values;
+    public void setValidTime(String time){
+        this.validTime = ZonedDateTime.parse(time);
+    }
     
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)

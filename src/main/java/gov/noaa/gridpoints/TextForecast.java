@@ -2,25 +2,21 @@ package gov.noaa.gridpoints;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.GsonBuilder;
+import gov.noaa.Feature;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.geojson.GeometryCollection;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TextForecast {
-
-  private GeometryCollection geometry;
-
-  private String type;
+public class TextForecast extends Feature {
 
   private List<String> context;
 
-  private Properties properties;
+  private GridpointsProperties properties;
 
   public String toJson(boolean pretty) {
   	GsonBuilder gsonBuilder = new GsonBuilder();

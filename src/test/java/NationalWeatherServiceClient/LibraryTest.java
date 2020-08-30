@@ -778,13 +778,12 @@ public class LibraryTest {
 
     ObservationFeature feature = mapper.readValue(json.toString(), ObservationFeature.class);
 
-    StationService service = WeatherServiceGenerator.createService(StationService.class);
+    StationService service = TestWeatherServiceGenerator.createService(StationService.class);
     Call<ObservationFeature> callSync = service.getObservations("GYGM4");
 
     try {
       Response<ObservationFeature> response = callSync.execute();
       ObservationFeature observationResponse = response.body();
-
       // System.out.println(feature.toJson(false));
 
       assertEquals(feature.toJson(false), observationResponse.toJson(false));

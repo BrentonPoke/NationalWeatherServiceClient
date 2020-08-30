@@ -16,7 +16,7 @@ public class Forecast extends Feature {
 	
 	private List<String> context;
 
-	private Properties properties;
+	private GridpointsProperties properties;
 	
 	public void setGeometry(org.geojson.Polygon geometry) {
 		this.geometry = geometry;

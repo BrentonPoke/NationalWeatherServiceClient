@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Observation extends Feature {
 	private ObservationProperties properties;

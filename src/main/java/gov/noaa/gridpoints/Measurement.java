@@ -2,6 +2,7 @@ package gov.noaa.gridpoints;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,11 @@ public class Measurement {
 	@Data
 	static class Value{
 		
-		private String validTime;
-		
+		private ZonedDateTime validTime;
 		private Double value;
+		public void setValidTime(String time){
+			this.validTime = ZonedDateTime.parse(time);
+		}
 		public String toJson(boolean pretty){
 			if(pretty)
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);

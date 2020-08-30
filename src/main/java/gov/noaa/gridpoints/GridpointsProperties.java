@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class Properties{
+public class GridpointsProperties {
 
 	private Elevation elevation;
 
