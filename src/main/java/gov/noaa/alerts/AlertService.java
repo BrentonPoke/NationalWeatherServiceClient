@@ -8,23 +8,23 @@ import retrofit2.http.QueryMap;
 
 public interface AlertService {
   @GET("/alerts")
-  public Call<Alerts> getAlerts(@QueryMap Map<String, String> map);
+  Call<Alerts> getAlerts(@QueryMap Map<String, String> map);
 
   @GET("/alerts/active")
-  public Call<Alerts> getActiveAlerts(@QueryMap Map<String, String> map);
+  Call<Alerts> getActiveAlerts(@QueryMap Map<String, String> map);
 
   @GET("/alerts/active/zone/{zoneid}")
-  public Call<Alerts> getZoneByID(@Path(value = "zoneid") String zoneid);
+  Call<Alerts> getZoneByID(@Path(value = "zoneid") String zoneid);
 
   @GET("/alerts/{alertid}")
-  public Call<Alerts> getAlertByID(@Path("alertid") String alertid);
+  Call<Alerts> getAlertByID(@Path("alertid") String alertid);
 
   @GET("/alerts/types")
-  public Call<AlertTypes> getAlertTypes();
+  Call<AlertTypes> getAlertTypes();
 
   @GET("/alerts/active/region/{region}")
-  public Call<Alerts> getAlertsByMarineRegion(@Path(value = "region") String region);
+  Call<Alerts> getAlertsByMarineRegion(@Path(value = "region") String region);
 
   @GET("/alerts/active/area/{area}")
-  public Call<Alerts> getAlertsByArea(@Path(value = "area") String area);
+  Call<Alerts> getAlertsByArea(@Path(value = "area") String area);
 }
