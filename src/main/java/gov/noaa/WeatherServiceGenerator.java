@@ -9,12 +9,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
 public class WeatherServiceGenerator<T> {
-  static {
-    if(System.getenv().containsKey("MOCK_WEATHER_URL"))
-      BASE_URL = System.getenv("MOCK_WEATHER_URL");
-    else BASE_URL  = "https://api.weather.gov";
-  }
-  private static final String BASE_URL; //= "https://api.weather.gov";
+  
+  private static final String BASE_URL= "https://api.weather.gov";
   Response<T> resp;
   WeatherServiceException exception = new WeatherServiceException();
   
