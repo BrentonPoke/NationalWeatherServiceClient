@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import gov.noaa.NWSAPI;
 import gov.noaa.WeatherServiceGenerator;
 import gov.noaa.models.alerts.AlertService;
 import gov.noaa.models.alerts.AlertTypes;
@@ -56,9 +57,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class LibraryTest {
 
-  static class TestWeatherServiceGenerator {
-    private static final String BASE_URL =
-        "https://37e6db5e-3ccd-4bbc-a1e4-835b4679eae4.mock.pstmn.io";
+  public static class TestWeatherServiceGenerator {
+    static {
+      if(System.getenv().containsKey("MOCK_WEATHER_URL"))
+        BASE_URL = System.getenv("MOCK_WEATHER_URL");
+      else BASE_URL  = "https://api.weather.gov";
+    }
+    private static final String BASE_URL;
     static ObjectMapper mapper = new ObjectMapper();
     private static Retrofit.Builder builder =
         new Retrofit.Builder()
@@ -178,16 +183,11 @@ public class LibraryTest {
 
     ObjectMapper mapper = new ObjectMapper();
     Alerts alerts = mapper.readValue(json.toString(), Alerts.class);
-    AlertService service = WeatherServiceGenerator.createService(AlertService.class);
-    Call<Alerts> callSync = service.getActiveAlerts(params);
-    Logger.getAnonymousLogger().info(callSync.request().url().toString());
-    try {
-      Response<Alerts> response = callSync.execute();
-
-      assertEquals(alerts, response.body());
-    } catch (IOException e) {
-      Logger.getLogger(String.valueOf(callSync.getClass())).log(Level.SEVERE, e.getMessage());
-    }
+    
+    Alerts alertlist = new NWSAPI().getAllAlerts(params);
+    Logger.getAnonymousLogger().info(alertlist.toJson(false));
+  
+    assertEquals(alerts, alertlist);
   }
 
   @Test

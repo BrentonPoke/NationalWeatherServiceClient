@@ -3,12 +3,20 @@ package gov.noaa;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
-public class WeatherServiceGenerator {
-  private static final String BASE_URL = "https://api.weather.gov";
+public class WeatherServiceGenerator<T> {
+  static {
+    if(System.getenv().containsKey("MOCK_WEATHER_URL"))
+      BASE_URL = System.getenv("MOCK_WEATHER_URL");
+    else BASE_URL  = "https://api.weather.gov";
+  }
+  private static final String BASE_URL; //= "https://api.weather.gov";
+  Response<T> resp;
+  WeatherServiceException exception = new WeatherServiceException();
   
   static ObjectMapper mapper = new ObjectMapper();
   
