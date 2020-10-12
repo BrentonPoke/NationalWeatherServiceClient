@@ -1,6 +1,7 @@
 package gov.noaa;
 
 import gov.noaa.models.alerts.AlertService;
+import gov.noaa.models.alerts.AlertTypes;
 import gov.noaa.models.alerts.Alerts;
 import java.io.IOException;
 import java.util.Map;
@@ -15,11 +16,12 @@ public class NWSAPI {
   
   private final AlertService service = WeatherServiceGenerator.createService(AlertService.class);
   private Response<Alerts> response;
+  private Call<Alerts> alertsCall;
   
 public Alerts getAllAlerts(Map<String, String> map){
-  Call<Alerts> alerts = service.getAlerts(map);
+  alertsCall = service.getAlerts(map);
   try {
-    response = alerts.execute();
+    response = alertsCall.execute();
   } catch (IOException e) {
     log.error("Couldn't execute method getAllAlerts from {}",this.getClass(),e);
   }
@@ -32,9 +34,9 @@ public Alerts getActiveAlerts(Map<String, String> map){
 }
 
 public Alerts getZoneByID(String zoneID){
-  Call<Alerts> zones = service.getZoneByID(zoneID);
+  alertsCall = service.getZoneByID(zoneID);
   try {
-    response = zones.execute();
+    response = alertsCall.execute();
   } catch (IOException e) {
     log.error("Couldn't execute method getZoneByID from {}",this.getClass(),e);
   }
@@ -42,12 +44,44 @@ public Alerts getZoneByID(String zoneID){
 }
 
 public Alerts getAlertByID(String id){
-  Call<Alerts> alertsCall = service.getAlertByID(id);
+  alertsCall = service.getAlertByID(id);
   
   try {
     response = alertsCall.execute();
   } catch (IOException e) {
     log.error("Couldn't execute method getAlertsByID from {}",this.getClass(),e);
+  }
+  return response.body();
+}
+
+public AlertTypes getAlertTypes(){
+  Call<AlertTypes> types = service.getAlertTypes();
+  Response<AlertTypes> response = null;
+  try {
+    response = types.execute();
+  } catch (IOException e) {
+    log.error("Couldn't execute method getAlertTypes from {}",this.getClass(),e);
+  }
+  return response.body();
+}
+
+public Alerts getAlertsByMarineRegion(String region){
+  alertsCall = service.getAlertsByMarineRegion(region);
+  try {
+    response = alertsCall.execute();
+  } catch (IOException e) {
+    log.error("Couldn't execute method getAlertsByMarineRegion from {}",this.getClass(),e);
+  }
+  return response.body();
+}
+
+public Alerts getAlertsByArea(String area){
+  alertsCall = service.getAlertsByArea(area);
+  
+  try {
+    response = alertsCall.execute();
+  } catch (IOException e) {
+    log.error("Couldn't execute method getAlertsByArea from {}",this.getClass(),e);
   }
   return response.body();
 }
