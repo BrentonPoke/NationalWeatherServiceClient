@@ -5,24 +5,25 @@ import gov.noaa.models.alerts.Alerts;
 import java.io.IOException;
 import java.util.Map;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import retrofit2.Call;
 import retrofit2.Response;
 
 @NoArgsConstructor
+@Log4j2
 public class NWSAPI {
   
-  private Logger logger = LoggerFactory.getLogger(NWSAPI.class);
   private final AlertService service = WeatherServiceGenerator.createService(AlertService.class);
   private Response<Alerts> response;
   
-@SneakyThrows
 public Alerts getAllAlerts(Map<String, String> map){
   Call<Alerts> alerts = service.getAlerts(map);
-  response = alerts.execute();
-    return response.body();
+  try {
+    response = alerts.execute();
+  } catch (IOException e) {
+    log.error("Couldn't execute method getAllAlerts from {}",this.getClass(),e);
+  }
+  return response.body();
 }
 
 public Alerts getActiveAlerts(Map<String, String> map){
@@ -35,8 +36,20 @@ public Alerts getZoneByID(String zoneID){
   try {
     response = zones.execute();
   } catch (IOException e) {
-    logger.error("Couldn't execute method getZoneByID from {}",this.getClass(),e);
+    log.error("Couldn't execute method getZoneByID from {}",this.getClass(),e);
   }
   return response.body();
 }
+
+public Alerts getAlertByID(String id){
+  Call<Alerts> alertsCall = service.getAlertByID(id);
+  
+  try {
+    response = alertsCall.execute();
+  } catch (IOException e) {
+    log.error("Couldn't execute method getAlertsByID from {}",this.getClass(),e);
+  }
+  return response.body();
+}
+
 }
