@@ -14,7 +14,7 @@ public enum Status {
   SYSTEM("System","system"),
   TEST("Test","test"),
   DRAFT("Draft","draft");
-  @JsonValue
+
   private String uppercase;
   
   private String lowercase;
