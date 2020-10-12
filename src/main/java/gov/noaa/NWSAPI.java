@@ -14,13 +14,12 @@ import retrofit2.Response;
 @NoArgsConstructor
 public class NWSAPI {
   
-  private final Logger logger = LoggerFactory.getLogger(NWSAPI.class);
+  private Logger logger = LoggerFactory.getLogger(NWSAPI.class);
   private final AlertService service = WeatherServiceGenerator.createService(AlertService.class);
   private Response<Alerts> response;
   
 @SneakyThrows
 public Alerts getAllAlerts(Map<String, String> map){
-  //AlertService service = WeatherServiceGenerator.createService(AlertService.class);
   Call<Alerts> alerts = service.getAlerts(map);
   response = alerts.execute();
     return response.body();
