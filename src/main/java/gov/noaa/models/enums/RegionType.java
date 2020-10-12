@@ -12,7 +12,7 @@ public enum RegionType {
   FIRE("fire"),
   COUNTY("county");
   @JsonValue
-  private String value;
+  private final String value;
   
   RegionType(String value) {
     this.value = value;
