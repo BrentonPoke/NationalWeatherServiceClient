@@ -3,6 +3,12 @@ package gov.noaa;
 import gov.noaa.models.alerts.AlertService;
 import gov.noaa.models.alerts.AlertTypes;
 import gov.noaa.models.alerts.Alerts;
+import gov.noaa.models.glossary.Glossary;
+import gov.noaa.models.glossary.GlossaryService;
+import gov.noaa.models.gridpoints.Forecast;
+import gov.noaa.models.gridpoints.GridpointsService;
+import gov.noaa.models.gridpoints.TextForecast;
+import gov.noaa.models.stations.Stations;
 import java.io.IOException;
 import java.util.Map;
 import lombok.NoArgsConstructor;
@@ -13,77 +19,107 @@ import retrofit2.Response;
 @NoArgsConstructor
 @Log4j2
 public class NWSAPI {
-  
-  private final AlertService service = WeatherServiceGenerator.createService(AlertService.class);
-  private Response<Alerts> response;
-  private Call<Alerts> alertsCall;
-  
-public Alerts getAllAlerts(Map<String, String> map){
-  alertsCall = service.getAlerts(map);
-  try {
-    response = alertsCall.execute();
-  } catch (IOException e) {
-    log.error("Couldn't execute method getAllAlerts from {}",this.getClass(),e);
-  }
-  return response.body();
-}
 
-public Alerts getActiveAlerts(Map<String, String> map){
-  map.put("active","true");
-  return getAllAlerts(map);
-}
+  static class AlertsAPI {
+    private final AlertService service = WeatherServiceGenerator.createService(AlertService.class);
+    private Response<Alerts> response;
+    private Call<Alerts> alertsCall;
 
-public Alerts getZoneByID(String zoneID){
-  alertsCall = service.getZoneByID(zoneID);
-  try {
-    response = alertsCall.execute();
-  } catch (IOException e) {
-    log.error("Couldn't execute method getZoneByID from {}",this.getClass(),e);
-  }
-  return response.body();
-}
+    public Alerts getAllAlerts(Map<String, String> map) {
+      alertsCall = service.getAlerts(map);
+      try {
+        response = alertsCall.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getAllAlerts from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
 
-public Alerts getAlertByID(String id){
-  alertsCall = service.getAlertByID(id);
-  
-  try {
-    response = alertsCall.execute();
-  } catch (IOException e) {
-    log.error("Couldn't execute method getAlertsByID from {}",this.getClass(),e);
-  }
-  return response.body();
-}
+    public Alerts getActiveAlerts(Map<String, String> map) {
+      map.put("active", "true");
+      return getAllAlerts(map);
+    }
 
-public AlertTypes getAlertTypes(){
-  Call<AlertTypes> types = service.getAlertTypes();
-  Response<AlertTypes> response = null;
-  try {
-    response = types.execute();
-  } catch (IOException e) {
-    log.error("Couldn't execute method getAlertTypes from {}",this.getClass(),e);
-  }
-  return response.body();
-}
+    public Alerts getZoneByID(String zoneID) {
+      alertsCall = service.getZoneByID(zoneID);
+      try {
+        response = alertsCall.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getZoneByID from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
 
-public Alerts getAlertsByMarineRegion(String region){
-  alertsCall = service.getAlertsByMarineRegion(region);
-  try {
-    response = alertsCall.execute();
-  } catch (IOException e) {
-    log.error("Couldn't execute method getAlertsByMarineRegion from {}",this.getClass(),e);
-  }
-  return response.body();
-}
+    public Alerts getAlertByID(String id) {
+      alertsCall = service.getAlertByID(id);
 
-public Alerts getAlertsByArea(String area){
-  alertsCall = service.getAlertsByArea(area);
-  
-  try {
-    response = alertsCall.execute();
-  } catch (IOException e) {
-    log.error("Couldn't execute method getAlertsByArea from {}",this.getClass(),e);
-  }
-  return response.body();
+      try {
+        response = alertsCall.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getAlertsByID from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
+
+    public AlertTypes getAlertTypes() {
+      Call<AlertTypes> types = service.getAlertTypes();
+      Response<AlertTypes> response = null;
+      try {
+        response = types.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getAlertTypes from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
+
+    public Alerts getAlertsByMarineRegion(String region) {
+      alertsCall = service.getAlertsByMarineRegion(region);
+      try {
+        response = alertsCall.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getAlertsByMarineRegion from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
+
+    public Alerts getAlertsByArea(String area) {
+      alertsCall = service.getAlertsByArea(area);
+      try {
+        response = alertsCall.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getAlertsByArea from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
 }
+  static class GlossaryAPI {
+    private final GlossaryService service = WeatherServiceGenerator.createService(GlossaryService.class);
+    Response<Glossary> response;
+    public Glossary getGlossaryItems(){
+    Call<Glossary> glossaryCall = service.getGlossaryItems();
+    try{
+    response = glossaryCall.execute();
+    } catch (IOException e){
+      log.error("Couldn't execute method getGlossaryItems from {}", this.getClass(), e);
+    }
+    return response.body();
+    }
+  }
+  static class GridpointsAPI{
+    Call<TextForecast> textForecastCall;
+    Call<Stations> stationsCall;
+    Call<Forecast> forecastCall;
+    Response<Forecast> response;
+    private final GridpointsService service = WeatherServiceGenerator.createService(GridpointsService.class);
+    Forecast getRawForecastData( String weatherForecastStation, Integer x, Integer y){
+      forecastCall = service.getRawForecastData(weatherForecastStation,x,y);
+      try {
+        response = forecastCall.execute();
+      } catch (IOException e) {
+        log.error("Couldn't execute method getRawForecastData from {}", this.getClass(), e);
+      }
+      return response.body();
+    }
+  }
 
 }
