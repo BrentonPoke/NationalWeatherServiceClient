@@ -109,7 +109,9 @@ public class NWSAPI {
     Call<TextForecast> textForecastCall;
     Call<Stations> stationsCall;
     Call<Forecast> forecastCall;
+    Response<Stations> stationsResponse;
     Response<Forecast> response;
+    Response<TextForecast> textForecastResponse;
     private final GridpointsService service = WeatherServiceGenerator.createService(GridpointsService.class);
     Forecast getRawForecastData( String weatherForecastStation, Integer x, Integer y){
       forecastCall = service.getRawForecastData(weatherForecastStation,x,y);
@@ -120,6 +122,35 @@ public class NWSAPI {
       }
       return response.body();
     }
+    
+    TextForecast getTextForecast(String forcastOffice, Integer x, Integer y, String unit){
+      textForecastCall = service.getTextForecast(forcastOffice, x, y, unit);
+      try{
+        textForecastResponse = textForecastCall.execute();
+      } catch (IOException e){
+        log.error("Couldn't execute method getTextForecast from {}", this.getClass(), e);
+      }
+      return textForecastResponse.body();
+    }
+    TextForecast getHourlyTextForecast(String forcastOffice, Integer x, Integer y, String unit){
+      textForecastCall = service.getHourlyTextForecast(forcastOffice, x, y, unit);
+      try{
+        textForecastResponse = textForecastCall.execute();
+      } catch (IOException e){
+        log.error("Couldn't execute method getHourlyTextForecast from {}", this.getClass(), e);
+      }
+      return textForecastResponse.body();
+    }
+    Stations getStationsByGridArea(String forcastOffice, Integer x, Integer y){
+      stationsCall = service.getStationsByGridArea(forcastOffice, x, y);
+      try{
+        stationsResponse = stationsCall.execute();
+      } catch (IOException e){
+        log.error("Couldn't execute method getStationsByGridArea from {}", this.getClass(), e);
+      }
+      return stationsResponse.body();
+    }
+    
   }
 
 }
